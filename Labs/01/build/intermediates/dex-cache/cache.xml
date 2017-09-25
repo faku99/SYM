@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\5c42324e32a5d0124b4b7beda15c6c387229044a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_3d0cba30b5497281705af371370849f392dcafd3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\ecd0285f34b42a98c64a45a299632236e7a07876\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_54a838eaf034574c88c5033ece1d754cf1214522.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\da4f502f0667d93f77c18ff5048904fde31f517d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="b4a446c110c5a9f3a62907367d5eea4d4062c36a">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_b492feac237923a46b03bd4a857509e1ec773829.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\465ff80ed574b40616a8cd6188ad1dc91668f3c3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6314fd1ca55eb2a72d2f6030e4996a2a806eaf25">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_2fe23cd36718176068bf31e0b1ad47be662e90f7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\ddbc4ea7a11aa98131dd1a2e45110382a89b6ccd\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_39cdcf0ccd405f5af62f503d756a11be29b9b3f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\662e2423ae977381ba23ddced6b103756aa9500d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="4e38f488b591fa8ef9dce3e21752c92bde5f6f7c">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_37db6825e1577d5a60f8665726c82e9d52b0b54a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\9c84fb17de9fde73c1275b99e702b96305759fe7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="f9f219b8a8acc35922ab06f4ff29769041481b4b">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_f677f63bd8e075ef9b59fad5f54fa13b68a24388.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\f09f7d550e46f37b90cb7054f53ba0eb42f4cf5b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_0603dafac119519e6498cf833d7b67af1ffc8761.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\dc47b3e5bbe740fb17ee57557883d8b66ec0ee02\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="eef44a34be1eef845ecb4072e3692b434af05ad4">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_17ada42a04f939df2cad23d4be97649f746f5e64.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\05a9f0c41fa4eafa063e18b8962a468f00d81c9d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="28cb30c89c8e501ded77e960407731df6c54b844">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_701a4bbb48fa6b97e99a748818711d1cb4a33329.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\86c38aa71ec1e1662aeef2f9b0a68f44c7ddb510\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="97cd0ab3ffad045a162fc1a413fe6abc58e199c4">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_ccee43c637d68500f54c0df2c07fbfba969a3a83.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\049f29072b2a619d1a29729db48436b9c1cf8644\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="138b5e3a5341bb37117b13f327de68f81f9f0669">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_c0feb809a644c07639f197c136430ba94b739014.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\modules-2\files-2.1\com.android.support\support-annotations\26.0.2\8b68a849722b44f584e2d68c451c5e3844c10380\support-annotations-26.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8b68a849722b44f584e2d68c451c5e3844c10380">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\support-annotations-26.0.2_ac351c18a425a6c8ae2ce20c728f449fad3526b9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.android\build-cache\5c06f72c47e3ad19b18d957dd352320cac377e54\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="48a969b476c5c4bd8cabfe295428ff222bc68b8e">
+        <dex dex="C:\Users\David\Documents\Cours\HEIG\3eme\S1\SYM\Labos\01\Template\app\build\intermediates\pre-dexed\debug\classes_a4897e2afd7899897a72a2a583f08533495641e6.jar" />
+    </item>
+
+</items>
