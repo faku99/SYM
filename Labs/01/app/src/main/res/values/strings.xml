@@ -9,5 +9,6 @@
     <string name="wrong">Email or Password not recognized</string>
     <string name="good">Valid login, welcome !</string>
     <string name="incorrect_email_format">Incorrect email format!</string>
+    <string name="imie">IMIE</string>
 
 </resources>
