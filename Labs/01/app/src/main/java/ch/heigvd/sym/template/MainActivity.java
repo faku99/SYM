@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
     // For logging purposes
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    // ID's for the string passed by Intent
     public static final String EMAIL_ENTERED = "EMAIL_ENTERED";
     public static final String PASSWORD_GIVEN = "PASSWORD_GIVEN";
 
     // Just for test purposes : please destroy !
-    private static final String validEmail = "a@a.aaa";
+    private static final String validEmail = "a@a.a";
     private static final String validPassword = "a";
 
     // GUI elements
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     // Reset fields
                     email.setText("");
                     password.setText("");
+                    // If the following line is uncommented the activity will stop after the next one
+                    // is started
                     //finish();
                 } else {
                     // Wrong combination, display pop-up dialog and stay on login screen
@@ -145,10 +148,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isEmailValid(String email) {
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return email.contains("@");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
