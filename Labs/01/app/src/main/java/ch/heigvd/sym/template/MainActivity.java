@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.authent);
 
         // Link to GUI elements
-        this.email = (EditText) findViewById(R.id.email);
-        this.password = (EditText) findViewById(R.id.password);
-        this.signIn = (Button) findViewById(R.id.buttOk);
+        this.email = findViewById(R.id.email);
+        this.password = findViewById(R.id.password);
+        this.signIn = findViewById(R.id.buttOk);
 
         // Then program action associated to "Ok" button
         signIn.setOnClickListener(new OnClickListener() {
