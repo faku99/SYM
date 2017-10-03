@@ -133,9 +133,9 @@
     \item Clic-droit sur le dossier 
     \lstinline{res}, \textbf{New > Image Asset}, choisir \textbf{- Icon} et Image pour Asset Type. Puis choisir l'image et l'éditer si besoin. Ceci va créer un dossier drawable dans lequel sont stockées toutes les images de l'application. Plusieurs versions d'une même icône sont disponibles pour répondre aux besoins des différentes résolutions et formats des écrans.
     
-    \item L'application revient en arrière en laissant les champs complétés. Un comportement plus logique est d'effacer les champs de saisies afin de proposer à l'utilisateur (ou un autre utilisateur) de se reconnecter et ne pas laisser les identifiants d'un ancien utilisateur accessibles à tous.
+    \item L'application se termine car il n'y a plus d'activités sur la pile à cause de la méthode finish(). Un comportement plus logique est de ne pas détruire l'activité et permettre le retour sur l'activité de connexion. Il ne faut pas oublier d'effacer les champs de saisies afin de proposer à l'utilisateur (ou un autre utilisateur) de se reconnecter et ne pas laisser les identifiants d'un ancien utilisateur accessibles à tous.
     
-    \item On peut fournir le résultat d'une activité à une autre activité grâce à un Intent.
+    \item On peut fournir le résultat d'une activité à une autre activité grâce à un Intent. Il faut utiliser la méthode startActivityForResult() au lieu de startActivity() et implémenter la méthode onActivityResult() afin de récupérer le résultat de l'activité. Dans l'activité qui doit fournir un résultat, il faut recréer un Intent auquel on associe les valeurs à retourner (grâce aux méthodes putXxx()) qui pourra être utilisée pour récupérer les données.
     
     \item Il est nécessaire de garder en tête quelles sont les plateformes (versions d'API) que l'on souhaite viser avec notre application. Dans certains cas, il n'est pas nécessaire d'adapter, on peut utiliser la nouvelle méthode (getImei() dans ce cas) et laisser tomber les versions antérieures. Dans le cas où l'on souhaite garder la compatibilité avec les anciennes versions d'Android, il est nécessaire de trouver une autre solution (voir le code fourni en annexe) ou conserver ces méthodes dépréciées en gardant à l'esprit que leur support peut être arrêté à tout moment. Dans la plupart des cas, l'abandon total d'une méthode dépréciée suit la mort de la version de l'API associée.
     
@@ -154,6 +154,16 @@
     \item Afin de ne pas monopoliser les ressources inutilement (consommation de batterie supplémentaire, restrictions d'accès aux périphériques de la part d'une autre activité), il est important de suspendre l'interaction sur les connexions/capteurs s'ils ne sont pas utilisés par l'activité courante. D'autres mécanismes que les activités permettent l'utilisation des connexions/capteurs en arrière plan afin de ne pas couper la musique lors d'un changement d'activité et qu'elle continue à tourner en arrière-plan.
     
     \item Nous avons pu implémenter la résolution des permissions à la volée, lors de l'exécution de l'application à l'aide de la librairie [Dexter](https://github.com/Karumi/Dexter). L'exemple de code permet de montrer que la librairie gère par elle-même l'interaction avec l'utilisateur et les différentes actions à effectuer en cas d'acceptation ou de refus de la part de l'utilisateur à utiliser la permission souhaitée.
+    
+    \begin{lstlisting}
+    Dexter.withActivity(this)
+        .withPermission(Manifest.permission.CAMERA)
+        .withListener(new PermissionListener() {
+            @Override public void onPermissionGranted(PermissionGrantedResponse response) {/* ... */}
+            @Override public void onPermissionDenied(PermissionDeniedResponse response) {/* ... */}
+            @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {/* ... */}
+    }).check();
+    \end{lstlisting}
     
     
 \end{enumerate}
