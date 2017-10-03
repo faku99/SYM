@@ -4,6 +4,11 @@
 build/
 .idea/
 
+# LaTeX intermediate files
+*.aux
+*.out
+*.synctex.gz
+
 # Android .gitignore
 # Built application files
 *.apk

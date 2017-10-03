@@ -64,9 +64,12 @@ public class PersonalInformation extends AppCompatActivity {
                             break;
                         case Manifest.permission.READ_PHONE_STATE:
                             TelephonyManager mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                            imei.setText(mTelephonyManager.getDeviceId());
-                            // For API lvl 26 and more use the line bellow
-                            //imei.setText(mTelephonyManager.getImei());
+                            if (android.os.Build.VERSION.SDK_INT >= 26) {
+                                imei.setText(mTelephonyManager.getImei());
+                            }
+                            else {
+                                imei.setText(mTelephonyManager.getDeviceId());
+                            }
                     }
                 }
             }

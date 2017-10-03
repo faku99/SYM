@@ -156,21 +156,53 @@ if (android.os.Build.VERSION.SDK_INT >= 26) {
     	\captionof{figure}{Écran de connexion en orientation paysage}
     \end{minipage}
     
-    \item \lstinputlisting[language=XML]{Labs/01/app/src/main/res/layout/authent_relative.xml}
+    \item \lstinputlisting[language=XML]{src/app/src/main/res/layout/authent_relative.xml}
     
     \item Afin de ne pas monopoliser les ressources inutilement (consommation de batterie supplémentaire, restrictions d'accès aux périphériques de la part d'une autre activité), il est important de suspendre l'interaction sur les connexions/capteurs s'ils ne sont pas utilisés par l'activité courante. D'autres mécanismes que les activités permettent l'utilisation des connexions/capteurs en arrière plan afin de ne pas couper la musique lors d'un changement d'activité et qu'elle continue à tourner en arrière-plan.
     
+    \begin{minipage}{\linewidth}
+    	\centering
+    	\includegraphics[width=\linewidth]{images/app_lifecycle.png}
+    	\captionof{figure}{Cycle de vie d'une application Android}
+    \end{minipage}
+    
+    \newpage
+    
     \item Nous avons pu implémenter la résolution des permissions à la volée, lors de l'exécution de l'application à l'aide de la librairie \href{https://github.com/Karumi/Dexter}{\textbf{Dexter}}. L'exemple de code permet de montrer que la librairie gère par elle-même l'interaction avec l'utilisateur et les différentes actions à effectuer en cas d'acceptation ou de refus de la part de l'utilisateur à utiliser la permission souhaitée.
     
-    \begin{lstlisting}
+\begin{lstlisting}
 Dexter.withActivity(this)
-    .withPermission(Manifest.permission.CAMERA)
-    .withListener(new PermissionListener() {
-        @Override public void onPermissionGranted(PermissionGrantedResponse response) {/* ... */}
-        @Override public void onPermissionDenied(PermissionDeniedResponse response) {/* ... */}
-        @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {/* ... */}
+        .withPermissions(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE
+        ).withListener(new MultiplePermissionsListener() {
+    @Override
+    public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+        for (PermissionGrantedResponse response : report.getGrantedPermissionResponses()) {
+            switch (response.getPermissionName()) {
+                case Manifest.permission.READ_EXTERNAL_STORAGE:
+                    File pictureAsFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/0fd.jpg");
+                    facePicture = findViewById(R.id.facePicture);
+                    Bitmap facePictureBmp = BitmapFactory.decodeFile(pictureAsFile.getAbsolutePath());
+                    facePicture.setImageBitmap(facePictureBmp);
+                    break;
+                case Manifest.permission.READ_PHONE_STATE:
+                    TelephonyManager mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    if (android.os.Build.VERSION.SDK_INT >= 26) {
+                        imei.setText(mTelephonyManager.getImei());
+                    }
+                    else {
+                        imei.setText(mTelephonyManager.getDeviceId());
+                    }
+            }
+        }
+    }
+
+    @Override
+    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
 }).check();
-    \end{lstlisting}
+\end{lstlisting}
     
     
 \end{enumerate}
