@@ -1,0 +1,178 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[french]{babel}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tikz}
+
+% Couleurs pour le code.
+\definecolor{pgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{pred}{rgb}{0.9, 0.0, 0.0}
+
+% Police utilisée pour le code.
+\renewcommand{\ttdefault}{pcr}
+
+% Espace avant et après une 'minipage'.
+\BeforeBeginEnvironment{minipage}{\vskip 15pt}
+\AfterEndEnvironment{minipage}{\vskip 10pt}
+
+% Paramètres du paquet 'listings'.
+\lstset{
+	backgroundcolor = \color{white},
+    basicstyle = \ttfamily,
+    breakatwhitespace = false,
+    breaklines = true,
+    captionpos = none,
+    columns = fixed,
+    commentstyle = \color{pgreen},
+    extendedchars = false,
+    frame = trbl,
+    frameround = none,
+    framesep = 2pt,
+    keywordstyle = \bfseries,
+	language = java,
+    numbers = left,
+    numbersep = 5pt,
+    numberstyle = \small\ttfamily,
+    showspaces = false,
+   	showstringspaces = false,
+    stringstyle = \color{pred},
+    tabsize = 4
+}
+% Fait en sorte que le code ne casse pas au milieu d'un saut de page.
+\BeforeBeginEnvironment{lstlisting}{\begin{minipage}{\linewidth}}
+\AfterEndEnvironment{lstlisting}{\end{minipage}}
+
+% Désactive l'indentation par défaut des paragraphes.
+\setlength\parindent{0pt}
+
+% Suppression de la numérotation des sections.
+%\setcounter{secnumdepth}{0}
+
+% Profondeur de la table des matières.
+\setcounter{tocdepth}{3}
+
+\setitemize{itemsep=0.2em}
+
+% Police par défaut.
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\makeatletter
+\renewcommand{\@maketitle}{
+	\newpage
+    \null
+    
+    \begin{tikzpicture}[remember picture,overlay]
+    	\node[anchor=north west,inner sep=1cm] at (current page.north west)
+        	{\includegraphics[width=0.45\linewidth]{images/heigvd_logo.png}};
+    \end{tikzpicture}
+    
+    \vfill
+    
+    \fontfamily{pag}
+    
+    \begin{center}
+    	\@title
+        \vskip 100pt
+        {\Large \@author}
+        \vskip 60pt
+        {\large \@date}
+    \end{center}
+    
+    \vfill
+}
+\makeatother
+
+\title{
+	{\fontsize{40pt}{40pt}\selectfont SYM}
+    \vskip 1.5em
+    {\Huge Laboratoire 01}
+}
+
+\author{
+	\begin{tabular}{ll}
+    	Étudiants: 	& Ludovic Delafontaine \\
+    				& Lucas Elisei \\
+        		   	& David Truan \\
+        \\
+        Professeur: & Fabien Dutoit \\
+        Assistants:	& Michaël Sandoz \\
+        			& Luca Bianchi
+    \end{tabular}
+}
+
+% En-têtes.
+\pagestyle{fancy}
+\lhead{SYM}
+\rhead{Laboratoire 01}
+
+\maketitle
+
+\pagebreak
+
+\section{Introduction}
+
+Le but de ce laboratoire est d'implémenter une application élémentaire afin de se familiariser avec l'environnement de développement Android.
+
+\section{Réponses aux questions}
+
+\begin{enumerate}
+	\item C'est dans les ressources. Il suffit de créer un fichier de traduction par langue et Android tentera de prendre la langue du téléphone comme langue pour l'application.
+    Si la langue de l'application ne supporte pas la langue du téléphone, la langue par défaut prend la place de la traduction manquante.
+	
+    \item Clic-droit sur le dossier \texttt{res}, \textbf{New > Image Asset}, choisir \textbf{Launcher Icons} pour \textit{Icon Type} et \textbf{Image} pour \textit{Asset Type}. Puis choisir l'image et l'éditer si besoin. Ceci va créer un dossier \texttt{drawable} dans lequel sont stockées toutes les images de l'application. Plusieurs versions d'une même icône sont disponibles pour répondre aux besoins des différentes résolutions et formats des écrans.
+    
+    \item L'application se termine car il n'y a plus d'activités sur la pile à cause de la méthode \lstinline{finish()}. Un comportement plus logique est de ne pas détruire l'activité et permettre le retour sur l'activité de connexion. Il ne faut pas oublier d'effacer les champs de saisies afin de proposer à l'utilisateur (ou un autre utilisateur) de se reconnecter et ne pas laisser les identifiants d'un ancien utilisateur accessibles à tous.
+    
+    \item On peut fournir le résultat d'une activité à une autre activité grâce à un objet \lstinline{Intent}. Il faut utiliser la méthode \lstinline{startActivityForResult()} au lieu de \lstinline{startActivity()} et implémenter la méthode \lstinline{onActivityResult()} afin de récupérer le résultat de l'activité. Dans l'activité qui doit fournir un résultat, il faut recréer un \lstinline{Intent} auquel on associe les valeurs à retourner (grâce aux méthodes \lstinline{putXXX()}) qui pourra être utilisée pour récupérer les données.
+    
+    \item Il est nécessaire de garder en tête quelles sont les plateformes (versions d'API) que l'on souhaite viser avec notre application. Dans certains cas, il n'est pas nécessaire d'adapter. On peut utiliser la nouvelle méthode (\lstinline{getImei()} dans ce cas) et laisser tomber les versions antérieures. Dans le cas où l'on souhaite garder la compatibilité avec les anciennes versions d'Android, il est nécessaire de trouver une autre solution (voir le code ci-dessous) ou conserver ces méthodes dépréciées en gardant à l'esprit que leur support peut être arrêté à tout moment. Dans la plupart des cas, l'abandon total d'une méthode dépréciée suit la mort de la version de l'API associée.
+    
+    \begin{lstlisting}
+if (android.os.Build.VERSION.SDK_INT >= 26) {
+    return telephonyManager.getImei();
+} else {
+    return telephonyManager.getDeviceId();
+}
+    \end{lstlisting}
+    
+    \item Ajouter un fichier ressource de type \textbf{Layout}, \textbf{UIMode} et d'orientation paysage. Nommer le fichier comme celui utilisé pour le portrait. Un dossier \texttt{layout-land} sera créé, contenant les layouts paysages. Le fait de le nommer avec le même nom permettra à l'application de détecter automatiquement l'orientation et sélectionner le layout correspondant.
+    
+    \begin{minipage}{\linewidth}
+    	\centering
+    	\includegraphics[width=0.6\linewidth]{images/landscape_screen.png}
+    	\captionof{figure}{Écran de connexion en orientation paysage}
+    \end{minipage}
+    
+    \item \lstinputlisting[language=XML]{Labs/01/app/src/main/res/layout/authent_relative.xml}
+    
+    \item Afin de ne pas monopoliser les ressources inutilement (consommation de batterie supplémentaire, restrictions d'accès aux périphériques de la part d'une autre activité), il est important de suspendre l'interaction sur les connexions/capteurs s'ils ne sont pas utilisés par l'activité courante. D'autres mécanismes que les activités permettent l'utilisation des connexions/capteurs en arrière plan afin de ne pas couper la musique lors d'un changement d'activité et qu'elle continue à tourner en arrière-plan.
+    
+    \item Nous avons pu implémenter la résolution des permissions à la volée, lors de l'exécution de l'application à l'aide de la librairie \href{https://github.com/Karumi/Dexter}{\textbf{Dexter}}. L'exemple de code permet de montrer que la librairie gère par elle-même l'interaction avec l'utilisateur et les différentes actions à effectuer en cas d'acceptation ou de refus de la part de l'utilisateur à utiliser la permission souhaitée.
+    
+    \begin{lstlisting}
+Dexter.withActivity(this)
+    .withPermission(Manifest.permission.CAMERA)
+    .withListener(new PermissionListener() {
+        @Override public void onPermissionGranted(PermissionGrantedResponse response) {/* ... */}
+        @Override public void onPermissionDenied(PermissionDeniedResponse response) {/* ... */}
+        @Override public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {/* ... */}
+}).check();
+    \end{lstlisting}
+    
+    
+\end{enumerate}
+
+\end{document}
