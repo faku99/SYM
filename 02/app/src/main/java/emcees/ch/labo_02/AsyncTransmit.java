@@ -10,4 +10,7 @@ public class AsyncTransmit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_async_transmit);
     }
+
+
+
 }
