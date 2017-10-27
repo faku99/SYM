@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Labo_02</string>
+    <string name="async_button_name">Async</string>
+    <string name="differed_button_name">Differed</string>
+    <string name="object_button_name">Object</string>
+    <string name="compressed_button_name">Compressed</string>
+</resources>
