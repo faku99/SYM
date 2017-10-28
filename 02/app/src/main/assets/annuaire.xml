@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE directory SYSTEM "http://sym.iict.ch/directory.dtd">
+
+<directory>
+    <person>
+        <name>Delafontaine</name>
+        <firstname>Ludovic</firstname>
+        <gender>Male</gender>
+        <phone type="home">0211231212</phone>
+    </person>
+    <person>
+        <name>Elisei</name>
+        <firstname>Lucas</firstname>
+        <middlename>Le DUC</middlename>
+        <gender>Male</gender>
+        <phone type="mobile">0213453434</phone>
+    </person>
+    <person>
+        <name>Truan</name>
+        <firstname>David</firstname>
+        <gender>Male</gender>
+        <phone type="work">0216786767</phone>
+    </person>
+</directory>

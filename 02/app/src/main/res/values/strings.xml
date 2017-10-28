@@ -4,4 +4,10 @@
     <string name="differed_button_name">Differed</string>
     <string name="object_button_name">Object</string>
     <string name="compressed_button_name">Compressed</string>
+
+    <!-- ObjectTransmit activity -->
+    <string name="ot_radiojson">JSON</string>
+    <string name="ot_radioxml">XML</string>
+    <string name="ot_sendbutton">Send</string>
+    <string name="ot_responsetext">Response</string>
 </resources>

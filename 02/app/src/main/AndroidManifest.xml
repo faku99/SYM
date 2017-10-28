@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="emcees.ch.labo_02">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,7 @@
         <activity android:name=".AsyncTransmit" />
         <activity android:name=".ObjectTransmit" />
         <activity android:name=".CompressedTransmit" />
-        <activity android:name=".DifferedTransmit"></activity>
+        <activity android:name=".DifferedTransmit" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
