@@ -135,17 +135,57 @@ Dans le troisième cas
 \section{Réponses aux questions}
 
 \begin{enumerate}
-	\item Question 1
+	\item Les interfaces AsyncSendRequest et CommunicationEventListener utilisées au point 3.1 restent très (et certainement trop) simples pour être utilisables dans une vraie application : que se passe-t-il si le serveur n’est pas joignable dans l’immédiat ou s’il retourne un code HTTP d’erreur ? Vous pouvez par exemple proposer une nouvelle version de ces deux interfaces pour vous aider à illustrer votre réponse.
+    
+    REPONSE
+    Comme nous avons utilisé la librairie OkHttp et que nous avons implémenter notre solution en partant du principe que ce genre de problème peut arriver, nous vous invitons à regarder le code de notre solution.
+    
+    Dans le premier, troisième et quatrième cas, en cas d'erreurs de communication ou de la part du serveur, comme nous partons du principe que l'on était censé recevoir une réponse quasi immédiate (lors du login par exemple), il n'est pas nécessaire de stocker la requête pour la renvoyer de façon différée. Il faut avertir l'utilisateur de la non disponibilité du service et l'inviter à recommencer plus tard.
+    
+    Dans le deuxième cas par contre, comme il n'est pas nécessaire d'obtenir une réponse immédiate de la part du serveur (synchronisation de données par exemple), il est possible de stocker dans une liste les requêtes qui ont été effectuées par le client et lors de la reprise de la communication avec le réseau/client, renvoyer toutes les requêtes en suspens.
 	
-    \item Question 2
+    \item Si une authentification par le serveur est requise, peut-on utiliser un protocole asynchrone ? Quelles seraient les restrictions ? Peut-on utiliser une transmission différée ?
     
-    \item Question 3
+    REPONSE
+    Oui tout à fait, c'est même fortement recommandé afin de ne pas bloquer toute l'application. Comme pour le point précédent, si l'application n'a pas la possibilité de communiquer avec le serveur, il est nécessaire d'avertir l'utilisateur de recommencer plus tard. Dans le cas où il est possible de communiquer avec le serveur, il suffit d'attendre la réponse du succès d'authentification. Il est par contre déconseiller de faire avec des transmissions différées car cela implique de stocker temporairement les identifiants, ce qui pose évidemment un problème de sécurité, et l'authentification pourrait alors avoir lieu à un moment qui n'a plus de sens de s'authentifier (cinq minutes, une heure ou un jour plus tard par exemple).
     
-    \item Question 4
+    \item Lors de l'utilisation de protocoles asynchrones, c'est généralement deux threads différents qui se préoccupent de la préparation, de l'envoi, de la réception et du traitement des données. Quels problèmes cela peut-il poser ?
     
-    \item Question 5
+    REPONSE
+    concurrence
     
-    \item Question 6
+    \item Lorsque l'on implémente l'écriture différée, il arrive que l'on ait soudainement plusieurs transmissions en attente qui deviennent possibles simultanément. Comment implémenter proprement cette situation (sans réalisation pratique) ? Voici deux possibilités :
+    
+    • Effectuer une connexion par transmission différée
+    
+    • Multiplexer toutes les connexions vers un même serveur en une seule connexion de transport.
+    Dans ce dernier cas, comment implémenter le protocole applicatif, quels avantages peut-on
+    espérer de ce multiplexage, et surtout, comment doit-on planifier les réponses du serveur
+    lorsque ces dernières s'avèrent nécessaires ?
+    
+    Comparer les deux techniques (et éventuellement d'autres que vous pourriez imaginer) et discuter des avantages et inconvénients respectifs.
+    
+    REPONSE
+    bla bla bla
+    
+    \item a. Quel inconvénient y a-t-il à utiliser une infrastructure de type REST/JSON n'offrant aucun
+    service de validation (DTD, XML-schéma, WSDL) par rapport à une infrastructure comme SOAP
+    offrant ces possibilités ? Y a-t-il en revanche des avantages que vous pouvez citer ?
+    
+    REPONSE
+    Il n'est pas possible de valider la structure du document lors de l'envoi ou de la réception car il n'existe pas d'outils pour valider les documents JSON réellement viable. La communication est par contre beaucoup plus légère car le format JSON est bien moins verbeux que le format XML et cela est un avantage comme nous pouvons le voir dans la question suivante.
+    
+    b. L’utilisation d’un mécanisme comme Protocol Buffers6 est-elle compatible avec une
+    architecture basée sur HTTP ? Veuillez discuter des éventuelles avantages ou limitations par
+    rapport à un protocole basé sur JSON ou XML ?
+    
+    REPONSE
+    Wut ?
+    
+    \item Quel gain peut-on constater en moyenne sur des fichiers texte (xml et json sont aussi du texte) en utilisant de la compression du point 3.4 ? Vous comparerez vos résultats par rapport au gain théorique d’une compression DEFLATE, vous enverrez aussi plusieurs tailles de contenu pour comparer.
+    
+    REPONSE
+    Benchmarks, tests, stats...
     
 \end{enumerate}
 
