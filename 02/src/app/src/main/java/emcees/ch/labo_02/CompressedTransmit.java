@@ -73,7 +73,6 @@ public class CompressedTransmit extends AppCompatActivity {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
         String content = "{\"top\":\"kek1\"}";
-        //String url = "http://192.168.1.139:3000/";
         String url = "http://sym.iict.ch/rest/json";
 
         CompressedTransmit.OkHttpPostHandler okHttpHandler = new CompressedTransmit.OkHttpPostHandler();
@@ -89,7 +88,6 @@ public class CompressedTransmit extends AppCompatActivity {
             byte[] data = new byte[length];
             is.read(data);
             String content = new String(data);
-            //String url = "http://192.168.1.139:3000/";
             String url = "http://sym.iict.ch/rest/xml";
 
             CompressedTransmit.OkHttpPostHandler okHttpHandler = new CompressedTransmit.OkHttpPostHandler();
