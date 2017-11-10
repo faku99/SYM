@@ -72,11 +72,21 @@ public class CompressedTransmit extends AppCompatActivity {
     private void _sendJSONRequest() {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-        String content = "{\"top\":\"kek1\"}";
-        String url = "http://sym.iict.ch/rest/json";
+        InputStream is = null;
+        try {
+            is = getAssets().open("lorem.json");
 
-        CompressedTransmit.OkHttpPostHandler okHttpHandler = new CompressedTransmit.OkHttpPostHandler();
-        okHttpHandler.execute(url, JSON, content);
+            int length = is.available();
+            byte[] data = new byte[length];
+            is.read(data);
+            String content = new String(data);
+            String url = "http://sym.iict.ch/rest/json";
+
+            OkHttpPostHandler okHttpHandler = new OkHttpPostHandler();
+            okHttpHandler.execute(url, JSON, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void _sendXMLRequest() {
@@ -90,7 +100,7 @@ public class CompressedTransmit extends AppCompatActivity {
             String content = new String(data);
             String url = "http://sym.iict.ch/rest/xml";
 
-            CompressedTransmit.OkHttpPostHandler okHttpHandler = new CompressedTransmit.OkHttpPostHandler();
+            OkHttpPostHandler okHttpHandler = new OkHttpPostHandler();
             okHttpHandler.execute(url, XML, content);
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,8 +151,6 @@ public class CompressedTransmit extends AppCompatActivity {
 
             try {
                 Response returnData = client.newCall(request).execute();
-
-                System.out.println(returnData.headers().toString());
 
                 return returnData.body().bytes();
             } catch (Exception e) {

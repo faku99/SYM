@@ -64,11 +64,21 @@ public class ObjectTransmit extends AppCompatActivity {
     private void _sendJSONRequest() {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-        String content = "{\"top\":\"kek1\"}";
-        String url = "http://sym.iict.ch/rest/json";
+        InputStream is = null;
+        try {
+            is = getAssets().open("lorem.json");
 
-        OkHttpPostHandler okHttpHandler = new OkHttpPostHandler();
-        okHttpHandler.execute(url, JSON, content);
+            int length = is.available();
+            byte[] data = new byte[length];
+            is.read(data);
+            String content = new String(data);
+            String url = "http://sym.iict.ch/rest/json";
+
+            OkHttpPostHandler okHttpHandler = new OkHttpPostHandler();
+            okHttpHandler.execute(url, JSON, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void _sendXMLRequest() {
@@ -119,6 +129,7 @@ public class ObjectTransmit extends AppCompatActivity {
 
             try {
                 Response returnData = client.newCall(request).execute();
+
                 return returnData.body().string();
             } catch (Exception e) {
                 e.printStackTrace();
