@@ -1,9 +1,9 @@
 package emcees.ch.labo_02;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,12 +24,12 @@ public class DifferedTransmit extends AppCompatActivity {
     public static final String SERVER_URL = "http://sym.iict.ch/rest/txt";
 
     // GUI elements
-    private EditText request = null;
-    private Button send = null;
-    private TextView response = null;
+    private EditText requestEditText = null;
+    private Button sendButton = null;
+    private TextView responseEditText = null;
 
     // List containing our pending requests
-    private List<String> pendingRequests = null;
+    private List<Request> pendingRequests = null;
     // Handler used to do the background task periodically
     private Handler handler;
     // Runnable used by our handler
@@ -43,29 +43,34 @@ public class DifferedTransmit extends AppCompatActivity {
         pendingRequests = new ArrayList<>();
 
         // Link to GUI elements
-        request = (EditText) findViewById(R.id.request);
-        send = (Button) findViewById(R.id.send);
-        response = (TextView) findViewById(R.id.response);
+        requestEditText = (EditText) findViewById(R.id.request);
+        sendButton = (Button) findViewById(R.id.send);
+        responseEditText = (TextView) findViewById(R.id.response);
 
         handler = new Handler();
         differedSending = () -> {
             // Schedule another event to be run in 5s
             handler.postDelayed(differedSending, 5 * 1000);
 
-            for (String data : pendingRequests) {
-                DifferedTransmit.OkHttpPostHandler okHttpHandler = new DifferedTransmit.OkHttpPostHandler();
-                okHttpHandler.execute(SERVER_URL, TEXT_PLAIN, data);
+            DifferedTransmit.OkHttpPostHandler okHttpHandler = new DifferedTransmit.OkHttpPostHandler();
+            for (Request request : pendingRequests) {
+                new DifferedTransmit.OkHttpPostHandler().execute(request);
             }
         };
 
         handler.post(differedSending);
 
         // Then program action associated to "Ok" button
-        send.setOnClickListener((v) -> {
+        sendButton.setOnClickListener((v) -> {
 
-            String data = request.getText().toString();
+            String data = requestEditText.getText().toString();
+            RequestBody body = RequestBody.create(TEXT_PLAIN, data);
+            Request request = new Request.Builder()
+                    .url(SERVER_URL)
+                    .post(body)
+                    .build();
 
-            pendingRequests.add(data);
+            pendingRequests.add(request);
         });
     }
 
@@ -83,23 +88,20 @@ public class DifferedTransmit extends AppCompatActivity {
         @Override
         protected String doInBackground(Object[] objects) {
 
-            String url = (String) objects[0];
-            MediaType dataType = (MediaType) objects[1];
-            String data = (String) objects[2];
-
-            RequestBody body = RequestBody.create(dataType, data);
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
+            // Need to save the request here so we can delete it if the post is successful
+            Request request = (Request) objects[0];
 
             try {
-                Response returnData = client.newCall(request).execute();
-                if (pendingRequests.contains(data)) {
-                    pendingRequests.remove(data);
-                }
+                Response response = client.newCall(request).execute();
 
-                return returnData.body().string();
+                // Get the body (can only be read once)and check if the response is successful (code
+                // [200 ; 300[. It is done here, because we cannot access the body in the onPostExecute()
+                String text = response.body().string();
+                if (response.isSuccessful()) {
+                    // Remove the request from the list if it was successfully sent
+                    pendingRequests.remove(request);
+                    return text;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -109,13 +111,11 @@ public class DifferedTransmit extends AppCompatActivity {
         /**
          * Method that is called when a result is available.
          *
-         * @param result The result computed from the background's thread.
+         * @param response The result computed from the background's thread.
          */
         @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                response.setText(result);
-            }
+        protected void onPostExecute(String response) {
+            responseEditText.setText(response);
         }
     }
 }
