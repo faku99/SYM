@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="emcees.ch.labo_02.ObjectTransmit"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="emcees.ch.labo_02.ObjectTransmit">
 
     <RadioGroup
         android:id="@+id/radioType"
@@ -20,30 +20,31 @@
             android:id="@+id/radioJSON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ot_radiojson"
-            android:checked="true"/>
+            android:checked="true"
+            android:text="@string/ot_radiojson" />
 
         <RadioButton
             android:id="@+id/radioXML"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ot_radioxml"/>
+            android:text="@string/ot_radioxml" />
     </RadioGroup>
 
     <Button
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ot_sendbutton"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:text="@string/ot_sendbutton" />
 
     <TextView
         android:id="@+id/responseTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ot_responsetext"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:scrollbars="vertical"
+        android:text="@string/ot_responsetext" />
 
 </LinearLayout>

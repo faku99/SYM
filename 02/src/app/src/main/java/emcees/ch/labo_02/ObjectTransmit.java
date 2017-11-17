@@ -3,6 +3,7 @@ package emcees.ch.labo_02;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -42,6 +43,8 @@ public class ObjectTransmit extends AppCompatActivity {
         sendButton = (Button) findViewById(R.id.sendButton);
         responseTextView = (TextView) findViewById(R.id.responseTextView);
 
+        responseTextView.setMovementMethod(new ScrollingMovementMethod());
+
         // Setup button listener.
         sendButton.setOnClickListener(view -> {
             // Retrieve selected type.
@@ -64,11 +67,21 @@ public class ObjectTransmit extends AppCompatActivity {
     private void _sendJSONRequest() {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-        String content = "{\"top\":\"kek1\"}";
-        String url = "http://sym.iict.ch/rest/json";
+        InputStream is = null;
+        try {
+            is = getAssets().open("lorem.json");
 
-        OkHttpPostHandler okHttpHandler = new OkHttpPostHandler();
-        okHttpHandler.execute(url, JSON, content);
+            int length = is.available();
+            byte[] data = new byte[length];
+            is.read(data);
+            String content = new String(data);
+            String url = "http://sym.iict.ch/rest/json";
+
+            OkHttpPostHandler okHttpHandler = new OkHttpPostHandler();
+            okHttpHandler.execute(url, JSON, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void _sendXMLRequest() {
@@ -119,6 +132,7 @@ public class ObjectTransmit extends AppCompatActivity {
 
             try {
                 Response returnData = client.newCall(request).execute();
+
                 return returnData.body().string();
             } catch (Exception e) {
                 e.printStackTrace();

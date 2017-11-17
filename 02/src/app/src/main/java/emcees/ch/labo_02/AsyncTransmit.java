@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,8 @@ public class AsyncTransmit extends AppCompatActivity {
         request = (EditText) findViewById(R.id.request);
         send = (Button) findViewById(R.id.send);
         response = (TextView) findViewById(R.id.response);
+
+        response.setMovementMethod(new ScrollingMovementMethod());
 
         // Then program action associated to "Ok" button
         send.setOnClickListener((v) -> {

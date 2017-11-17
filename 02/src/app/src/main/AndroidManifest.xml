@@ -18,10 +18,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AsyncTransmit" />
-        <activity android:name=".ObjectTransmit" />
-        <activity android:name=".CompressedTransmit" />
-        <activity android:name=".DifferedTransmit" />
+        <activity
+            android:name=".AsyncTransmit"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ObjectTransmit"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".CompressedTransmit"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DifferedTransmit"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

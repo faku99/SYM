@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,8 @@ public class DifferedTransmit extends AppCompatActivity {
         requestEditText = (EditText) findViewById(R.id.request);
         sendButton = (Button) findViewById(R.id.send);
         responseEditText = (TextView) findViewById(R.id.response);
+
+        responseEditText.setMovementMethod(new ScrollingMovementMethod());
 
         handler = new Handler();
         differedSending = () -> {
