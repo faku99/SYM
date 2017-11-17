@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import okhttp3.Response;
 
 public class DifferedTransmit extends AppCompatActivity {
 
+    private static final String TAG = DifferedTransmit.class.getSimpleName();
 
     public static final MediaType TEXT_PLAIN = MediaType.parse("text/plain; charset=utf-8");
     public static final String SERVER_URL = "http://sym.iict.ch/rest/txt";
@@ -99,6 +101,7 @@ public class DifferedTransmit extends AppCompatActivity {
                 String text = response.body().string();
                 if (response.isSuccessful()) {
                     // Remove the request from the list if it was successfully sent
+                    Log.d(TAG, "Request " + request.body() + " successfully sent");
                     pendingRequests.remove(request);
                     return text;
                 }
