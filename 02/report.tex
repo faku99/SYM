@@ -137,7 +137,7 @@ Dans le troisième cas
 \begin{enumerate}
 	\item Les interfaces AsyncSendRequest et CommunicationEventListener utilisées au point 3.1 restent très (et certainement trop) simples pour être utilisables dans une vraie application : que se passe-t-il si le serveur n’est pas joignable dans l’immédiat ou s’il retourne un code HTTP d’erreur ? Vous pouvez par exemple proposer une nouvelle version de ces deux interfaces pour vous aider à illustrer votre réponse.
     
-    REPONSE
+    \textbf{Réponse} \\
     Comme nous avons utilisé la librairie OkHttp et que nous avons implémenter notre solution en partant du principe que ce genre de problème peut arriver, nous vous invitons à regarder le code de notre solution.
     
     Dans les premier, troisième et quatrième cas, en cas d'erreurs de communication de la part du serveur, comme nous partons du principe que l'on était censé recevoir une réponse quasi immédiate (lors du login par exemple), il n'est pas nécessaire de stocker la requête pour la renvoyer de façon différée. Il faut avertir l'utilisateur de la non disponibilité du service et l'inviter à recommencer plus tard, ce qui n'est pas gérer par notre implémentation.
@@ -146,17 +146,19 @@ Dans le troisième cas
 	
     \item Si une authentification par le serveur est requise, peut-on utiliser un protocole asynchrone ? Quelles seraient les restrictions ? Peut-on utiliser une transmission différée ?
     
-    REPONSE
-    Oui tout à fait, c'est même fortement recommandé afin de ne pas bloquer toute l'application. Comme pour le point précédent, si l'application n'a pas la possibilité de communiquer avec le serveur, il est nécessaire d'avertir l'utilisateur de recommencer plus tard. Dans le cas où il est possible de communiquer avec le serveur, il suffit d'attendre la réponse du succès d'authentification. Il est par contre déconseiller de faire avec des transmissions différées car cela implique de stocker temporairement les identifiants, ce qui pose évidemment un problème de sécurité, et l'authentification pourrait alors avoir lieu à un moment qui n'a plus de sens de s'authentifier (cinq minutes, une heure ou un jour plus tard par exemple).
+    \textbf{Réponse} \\
+    Non, il n'est pas possible d'utiliser un protocole asynchrone car HTTP est par définition synchrone: il demande à avoir une confirmation de l'authentification avant de pouvoir continuer le processus. Il n'est pas conseillé de faire avec des transmissions différées car cela implique de stocker temporairement les identifiants, ce qui pose évidemment un problème de sécurité, et l'authentification pourrait alors avoir lieu à un moment qui n'a plus de sens de s'authentifier (cinq minutes, une heure ou un jour plus tard par exemple).
     
     \item Lors de l'utilisation de protocoles asynchrones, c'est généralement deux threads différents qui se préoccupent de la préparation, de l'envoi, de la réception et du traitement des données. Quels problèmes cela peut-il poser ?
     
-    REPONSE
+    \textbf{Réponse} \\
     Imaginons que l'on ait un thread pour la préparation et l'envoi de données et un autre thread pour la réception et le traitement des données.
     
     Le thread d'envoi effectue trois requêtes à la suite. Le thread de réception ne connait pas l'ordre d'envoi de ces requêtes et de ce fait, on ne peut pas garantir que ce thread gère correctement l'ordre de réception de ces données.
     
     Cela implique évidemment des problèmes de concurrences car l'envoi et le traitement peuvent s'effectuer dans un ordre inconnu.
+    
+    \newpage
     
     \item Lorsque l'on implémente l'écriture différée, il arrive que l'on ait soudainement plusieurs transmissions en attente qui deviennent possibles simultanément. Comment implémenter proprement cette situation (sans réalisation pratique) ? Voici deux possibilités :
     
@@ -169,7 +171,7 @@ Dans le troisième cas
     
     Comparer les deux techniques (et éventuellement d'autres que vous pourriez imaginer) et discuter des avantages et inconvénients respectifs.
     
-    REPONSE
+    \textbf{Réponse} \\
     Dans le cas de la transmission différée, les requêtes sont mises dans une liste en attendant de récupérer la connexion. Une fois la connexion récupérée, ces requêtes sont envoyées au serveur une par une et c'est tout.
     
     Dans le cas du multiplexage, il est nécessaire de combiner toutes les requêtes en attente en une seule requête. Afin que le serveur sache dans quel ordre les requêtes doivent être gérées, il est nécessaire de leur donner un ordre de traitement. Une fois cette requête récupérée côté serveur, il est nécessaire de démultiplexer cette requête et traiter les sous-requêtes dans l'ordre attribué.
@@ -184,19 +186,20 @@ Dans le troisième cas
     service de validation (DTD, XML-schéma, WSDL) par rapport à une infrastructure comme SOAP
     offrant ces possibilités ? Y a-t-il en revanche des avantages que vous pouvez citer ?
     
-    REPONSE
+    \textbf{Réponse} \\
     Il n'est pas possible de valider la structure du document lors de l'envoi ou de la réception car il n'existe pas d'outils pour valider les documents JSON réellement viable. La communication est par contre beaucoup plus légère car le format JSON est bien moins verbeux que le format XML et cela est un avantage comme nous pouvons le voir dans la question suivante.
     
-    b. L’utilisation d’un mécanisme comme Protocol Buffers6 est-elle compatible avec une
+    b. L’utilisation d’un mécanisme comme Protocol Buffers est-elle compatible avec une
     architecture basée sur HTTP ? Veuillez discuter des éventuelles avantages ou limitations par
     rapport à un protocole basé sur JSON ou XML ?
     
-    REPONSE
-    Wut ?
+    \textbf{Réponse} \\
+    Il est nécessaire que le serveur supporte lui aussi Protocol Buffers afin de pouvoir envoyer, recevoir et comprendre la communication entre lui et les clients.
+    Avantages et inconvéniants: Ce protocole offre la compression des informations, ce qui rend les données moins lourdes et donc la communication plus rapide. Néanmoins, le débuggeur est rendu plus difficile car il est nécessaire de comprendre la structure de l'information et de la décompresser afin de comprendre quelles données transitent, contrairement à JSON ou XML qui sont facilement lisibles par l'humain.
     
     \item Quel gain peut-on constater en moyenne sur des fichiers texte (xml et json sont aussi du texte) en utilisant de la compression du point 3.4 ? Vous comparerez vos résultats par rapport au gain théorique d’une compression DEFLATE, vous enverrez aussi plusieurs tailles de contenu pour comparer.
     
-    REPONSE
+    \textbf{Réponse} \\
     Le ratio théorique d'une compresssion DEFLATE est entre 2 et 5.
     
     Voici les résultats obtenus lors de nos tests:
