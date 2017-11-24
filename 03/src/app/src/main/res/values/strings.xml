@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Labo_03</string>
+    <string name="nfc_button_name">NFC</string>
+    <string name="barcodes_button_name">Codes-barres</string>
+    <string name="ibeacon_button_name">iBeacon</string>
+    <string name="sensors_button_name">Capteurs</string>
+</resources>

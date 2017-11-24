@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="emcees.ch.labo_03.MainActivity">
+
+
+    <Button
+        android:id="@+id/buttonNFC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="launchTransmitActivity"
+        android:text="@string/nfc_button_name" />
+
+    <Button
+        android:id="@+id/buttonBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="launchTransmitActivity"
+        android:text="@string/barcodes_button_name" />
+
+    <Button
+        android:id="@+id/buttoniBeacon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="launchTransmitActivity"
+        android:text="@string/ibeacon_button_name" />
+
+    <Button
+        android:id="@+id/buttonSensors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="launchTransmitActivity"
+        android:text="@string/sensors_button_name" />
+</LinearLayout>

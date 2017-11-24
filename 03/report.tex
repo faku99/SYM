@@ -1,0 +1,236 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[french]{babel}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tikz}
+
+% Couleurs pour le code.
+\definecolor{pgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{pred}{rgb}{0.9, 0.0, 0.0}
+
+% Police utilisée pour le code.
+\renewcommand{\ttdefault}{pcr}
+
+% Espace avant et après une 'minipage'.
+\BeforeBeginEnvironment{minipage}{\vskip 15pt}
+\AfterEndEnvironment{minipage}{\vskip 10pt}
+
+% Paramètres du paquet 'listings'.
+\lstset{
+	backgroundcolor = \color{white},
+    basicstyle = \ttfamily,
+    breakatwhitespace = false,
+    breaklines = true,
+    captionpos = none,
+    columns = fixed,
+    commentstyle = \color{pgreen},
+    extendedchars = false,
+    frame = trbl,
+    frameround = none,
+    framesep = 2pt,
+    keywordstyle = \bfseries,
+	language = java,
+    numbers = left,
+    numbersep = 5pt,
+    numberstyle = \small\ttfamily,
+    showspaces = false,
+   	showstringspaces = false,
+    stringstyle = \color{pred},
+    tabsize = 4
+}
+% Fait en sorte que le code ne casse pas au milieu d'un saut de page.
+\BeforeBeginEnvironment{lstlisting}{\begin{minipage}{\linewidth}}
+\AfterEndEnvironment{lstlisting}{\end{minipage}}
+
+% Désactive l'indentation par défaut des paragraphes.
+\setlength\parindent{0pt}
+
+% Suppression de la numérotation des sections.
+%\setcounter{secnumdepth}{0}
+
+% Profondeur de la table des matières.
+\setcounter{tocdepth}{3}
+
+\setitemize{itemsep=0.2em}
+
+% Police par défaut.
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\makeatletter
+\renewcommand{\@maketitle}{
+	\newpage
+    \null
+    
+    \begin{tikzpicture}[remember picture,overlay]
+    	\node[anchor=north west,inner sep=1cm] at (current page.north west)
+        	{\includegraphics[width=0.45\linewidth]{images/heigvd_logo.png}};
+    \end{tikzpicture}
+    
+    \vfill
+    
+    \fontfamily{pag}
+    
+    \begin{center}
+    	\@title
+        \vskip 100pt
+        {\Large \@author}
+        \vskip 60pt
+        {\large \@date}
+    \end{center}
+    
+    \vfill
+}
+\makeatother
+
+\title{
+	{\fontsize{40pt}{40pt}\selectfont SYM}
+    \vskip 1.5em
+    {\Huge Laboratoire 02}
+}
+
+\author{
+	\begin{tabular}{ll}
+    	Étudiants: 	& Ludovic Delafontaine \\
+    				& Lucas Elisei \\
+        		   	& David Truan \\
+        \\
+        Professeur: & Fabien Dutoit \\
+        Assistants:	& Michaël Sandoz \\
+        			& Luca Bianchi
+    \end{tabular}
+}
+
+% En-têtes.
+\pagestyle{fancy}
+\lhead{SYM}
+\rhead{Laboratoire 01}
+
+\maketitle
+
+\pagebreak
+
+\section{Introduction}
+
+Le but de ce laboratoire est d'étudier la programmation répartie asynchrone à l'aide d'un serveur REST et d'implémenter de plusieurs manières la communication entre le client et le serveur à l'aide de simulation du monde réel.
+
+Dans le premier cas, il s'agira de partir du principe que l'on reçoit une réponse quasi instantanée de la part du serveur.
+
+Dans le second cas, on suppose qu'une coupure de réseau intervient durant l'utilisation de l'application (passage dans un tunnel, changement d'antenne réseau, etc.) et qu'il est nécessaire d'enregistrer et essayer à intervals réguliers de renvoyer les requêtes de l'utilisateur au serveur jusqu'à rétablissement et envoi avec succès des requêtes.
+
+Dans le troisième cas 
+
+\section{Réponses aux questions}
+
+\begin{enumerate}
+	\item Les interfaces AsyncSendRequest et CommunicationEventListener utilisées au point 3.1 restent très (et certainement trop) simples pour être utilisables dans une vraie application : que se passe-t-il si le serveur n’est pas joignable dans l’immédiat ou s’il retourne un code HTTP d’erreur ? Vous pouvez par exemple proposer une nouvelle version de ces deux interfaces pour vous aider à illustrer votre réponse.
+    
+    \textbf{Réponse} \\
+    Comme nous avons utilisé la librairie OkHttp et que nous avons implémenter notre solution en partant du principe que ce genre de problème peut arriver, nous vous invitons à regarder le code de notre solution.
+    
+    Dans les premier, troisième et quatrième cas, en cas d'erreurs de communication de la part du serveur, comme nous partons du principe que l'on était censé recevoir une réponse quasi immédiate (lors du login par exemple), il n'est pas nécessaire de stocker la requête pour la renvoyer de façon différée. Il faut avertir l'utilisateur de la non disponibilité du service et l'inviter à recommencer plus tard, ce qui n'est pas gérer par notre implémentation.
+    
+    Dans le deuxième cas par contre, comme il n'est pas nécessaire d'obtenir une réponse immédiate de la part du serveur (synchronisation de données par exemple), il est possible de stocker dans une liste les requêtes qui ont été effectuées par le client et lors de la reprise de la communication avec le réseau/client, renvoyer toutes les requêtes en suspens.
+	
+    \item Si une authentification par le serveur est requise, peut-on utiliser un protocole asynchrone ? Quelles seraient les restrictions ? Peut-on utiliser une transmission différée ?
+    
+    \textbf{Réponse} \\
+    Non, il n'est pas possible d'utiliser un protocole asynchrone car HTTP est par définition synchrone: il demande à avoir une confirmation de l'authentification avant de pouvoir continuer le processus. Il n'est pas conseillé de faire avec des transmissions différées car cela implique de stocker temporairement les identifiants, ce qui pose évidemment un problème de sécurité, et l'authentification pourrait alors avoir lieu à un moment qui n'a plus de sens de s'authentifier (cinq minutes, une heure ou un jour plus tard par exemple).
+    
+    \item Lors de l'utilisation de protocoles asynchrones, c'est généralement deux threads différents qui se préoccupent de la préparation, de l'envoi, de la réception et du traitement des données. Quels problèmes cela peut-il poser ?
+    
+    \textbf{Réponse} \\
+    Imaginons que l'on ait un thread pour la préparation et l'envoi de données et un autre thread pour la réception et le traitement des données.
+    
+    Le thread d'envoi effectue trois requêtes à la suite. Le thread de réception ne connait pas l'ordre d'envoi de ces requêtes et de ce fait, on ne peut pas garantir que ce thread gère correctement l'ordre de réception de ces données.
+    
+    Cela implique évidemment des problèmes de concurrences car l'envoi et le traitement peuvent s'effectuer dans un ordre inconnu.
+    
+    \newpage
+    
+    \item Lorsque l'on implémente l'écriture différée, il arrive que l'on ait soudainement plusieurs transmissions en attente qui deviennent possibles simultanément. Comment implémenter proprement cette situation (sans réalisation pratique) ? Voici deux possibilités :
+    
+    • Effectuer une connexion par transmission différée
+    
+    • Multiplexer toutes les connexions vers un même serveur en une seule connexion de transport.
+    Dans ce dernier cas, comment implémenter le protocole applicatif, quels avantages peut-on
+    espérer de ce multiplexage, et surtout, comment doit-on planifier les réponses du serveur
+    lorsque ces dernières s'avèrent nécessaires ?
+    
+    Comparer les deux techniques (et éventuellement d'autres que vous pourriez imaginer) et discuter des avantages et inconvénients respectifs.
+    
+    \textbf{Réponse} \\
+    Dans le cas de la transmission différée, les requêtes sont mises dans une liste en attendant de récupérer la connexion. Une fois la connexion récupérée, ces requêtes sont envoyées au serveur une par une et c'est tout.
+    
+    Dans le cas du multiplexage, il est nécessaire de combiner toutes les requêtes en attente en une seule requête. Afin que le serveur sache dans quel ordre les requêtes doivent être gérées, il est nécessaire de leur donner un ordre de traitement. Une fois cette requête récupérée côté serveur, il est nécessaire de démultiplexer cette requête et traiter les sous-requêtes dans l'ordre attribué.
+    
+    Nous pensons qu'il est préférable ensuite de répondre à chacune de ces requêtes de façon indépendantes. Exemple: la seconde requête sur les trois retourne une erreur 404, il serait dommage de ne pas traiter les deux autres.
+    
+    Cela permet aussi au client d'avoir une réponse immédiate de ses actions.
+    
+    Les avantages du multiplexage à l'envoi sont de pouvoir regrouper plusieurs requêtes en attente à l'aide d'une seule requête. Nous ne voyons pas d'avantages à utiliser le multiplexage pour la réception des réponses pour les mêmes raisons évoquées précédemment.
+    
+    \item a. Quel inconvénient y a-t-il à utiliser une infrastructure de type REST/JSON n'offrant aucun
+    service de validation (DTD, XML-schéma, WSDL) par rapport à une infrastructure comme SOAP
+    offrant ces possibilités ? Y a-t-il en revanche des avantages que vous pouvez citer ?
+    
+    \textbf{Réponse} \\
+    Il n'est pas possible de valider la structure du document lors de l'envoi ou de la réception car il n'existe pas d'outils pour valider les documents JSON réellement viable. La communication est par contre beaucoup plus légère car le format JSON est bien moins verbeux que le format XML et cela est un avantage comme nous pouvons le voir dans la question suivante.
+    
+    b. L’utilisation d’un mécanisme comme Protocol Buffers est-elle compatible avec une
+    architecture basée sur HTTP ? Veuillez discuter des éventuelles avantages ou limitations par
+    rapport à un protocole basé sur JSON ou XML ?
+    
+    \textbf{Réponse} \\
+    Il est nécessaire que le serveur supporte lui aussi Protocol Buffers afin de pouvoir envoyer, recevoir et comprendre la communication entre lui et les clients.
+    Avantages et inconvéniants: Ce protocole offre la compression des informations, ce qui rend les données moins lourdes et donc la communication plus rapide. Néanmoins, le débuggeur est rendu plus difficile car il est nécessaire de comprendre la structure de l'information et de la décompresser afin de comprendre quelles données transitent, contrairement à JSON ou XML qui sont facilement lisibles par l'humain.
+    
+    \item Quel gain peut-on constater en moyenne sur des fichiers texte (xml et json sont aussi du texte) en utilisant de la compression du point 3.4 ? Vous comparerez vos résultats par rapport au gain théorique d’une compression DEFLATE, vous enverrez aussi plusieurs tailles de contenu pour comparer.
+    
+    \textbf{Réponse} \\
+    Le ratio théorique d'une compresssion DEFLATE est entre 2 et 5.
+    
+    Voici les résultats obtenus lors de nos tests:
+    \\
+    \begin{center}
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Type} & \textbf{Compressé} & \textbf{Taille}
+            \\
+            \hline
+            JSON & Non & 8598
+            \\
+            \hline
+            XML & Non & 680
+            \\
+            \hline
+            JSON & Oui & 2616 (69.6\%)
+            \\
+            \hline
+            XML & Oui & 272 (60.0\%)
+            \\
+            \hline
+        \end{tabular}
+    \end{center}
+    
+    Nous pouvons constater que nous sommes tout à fait dans les ratio théoriques de la compression DEFLATE. Cela a évidemment plusieurs avantages lors de la transmissions: des données plus petites et un transfert plus rapide.
+    
+\end{enumerate}
+
+\section{Conclusion}
+
+Nous avons pu constater que l'implémentation des communications réseaux dans un contexte mobile n'est pas aussi simple que dans un contexte fixe. En effet, le changement fréquent d'environnements nous oblige à réfléchir à tous les cas et implémenter ceci de façon asynchrone afin de ne pas bloquer l'utilisation de l'application pendant la communication. De plus, à cause de ces contraintes de faible réseau, nous avons pu constater à nouveau qu'il était préférable d'envoyer des données les plus petites possibles et nous pouvons nous aider de la compression afin d'y parvenir.
+
+\end{document}
