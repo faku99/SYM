@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:weightSum="1"
-    tools:context="emcees.ch.labo_03.BarcodeActivity">
+    tools:context="ch.heigvd.iict.sym.a3dcompassapp.CompassActivity">
 
+    <android.opengl.GLSurfaceView
+        android:id="@+id/compass_opengl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+</RelativeLayout>

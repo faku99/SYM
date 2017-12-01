@@ -36,7 +36,7 @@ public class SensorsActivity extends AppCompatActivity implements SensorEventLis
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // we initiate the view
-        setContentView(R.layout.activity_compass);
+        setContentView(R.layout.activity_sensors);
 
         // link to GUI
         this.m3DView = (GLSurfaceView) findViewById(R.id.compass_opengl);
@@ -47,6 +47,7 @@ public class SensorsActivity extends AppCompatActivity implements SensorEventLis
         //init opengl surface view
         this.m3DView.setRenderer(this.opglr);
 
+        // Create the sensors
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -54,32 +55,33 @@ public class SensorsActivity extends AppCompatActivity implements SensorEventLis
 
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST);
+
+        // Register the sensors
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this, accelerometer);
-        sensorManager.unregisterListener(this, magnetometer);
+
+        // Unregister the sensors to improve battery life
+        sensorManager.unregisterListener(this);
     }
 
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+        // Get the data for the required sensor
         if (event.sensor == accelerometer) {
             accelerometerData = event.values;
-            gotAccelerometerData = true;
         } else if (event.sensor == magnetometer) {
             magnetometerData = event.values;
-            gotMagnetometerData = true;
         }
 
-        if (gotAccelerometerData && gotMagnetometerData) {
-            SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerData, magnetometerData);
-            rotationMatrix = this.opglr.swapRotMatrix(rotationMatrix);
-        }
+        // Using the sensors data, get the rotation matrix and send it to the view
+        SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerData, magnetometerData);
+        this.opglr.swapRotMatrix(rotationMatrix);
     }
 
     @Override

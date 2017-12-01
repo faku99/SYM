@@ -4,4 +4,8 @@
     <string name="barcodes_button_name">Codes-barres</string>
     <string name="ibeacon_button_name">iBeacon</string>
     <string name="sensors_button_name">Capteurs</string>
+
+    <string name="QR_Code_result_header">Le texte contenu dans votre QR code est:</string>
+    <string name="scan_canceled">Scan annulé</string>
+    <string name="start_scan">Scan QR code</string>
 </resources>

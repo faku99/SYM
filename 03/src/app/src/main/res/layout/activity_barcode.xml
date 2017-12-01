@@ -2,15 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context="emcees.ch.labo_03.NFCActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="emcees.ch.labo_03.NFC">
+
+
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/start_scan" />
+
+    <TextView
+        android:id="@+id/scanResultHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/QR_Code_result_header"/>
+
+    <TextView
+        android:id="@+id/resultQRCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
 
 
 </LinearLayout>
