@@ -19,20 +19,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="emcees.ch.labo_03.NFC"
+            android:name="emcees.ch.labo_03.NFCActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="emcees.ch.labo_03.iBeacon"
+            android:name="emcees.ch.labo_03.iBeaconActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="emcees.ch.labo_03.Sensors"
+            android:name="emcees.ch.labo_03.SensorsActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="emcees.ch.labo_03.Barcode"
+            android:name="emcees.ch.labo_03.BarcodeActivity"
             android:windowSoftInputMode="adjustPan" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
 
 </manifest>

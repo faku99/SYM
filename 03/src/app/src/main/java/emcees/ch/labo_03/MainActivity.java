@@ -19,16 +19,16 @@ public class MainActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.buttonNFC:
-                intent = new Intent(this, NFC.class);
+                intent = new Intent(this, NFCActivity.class);
                 break;
             case R.id.buttonBarcode:
-                intent = new Intent(this, Barcode.class);
+                intent = new Intent(this, BarcodeActivity.class);
                 break;
             case R.id.buttoniBeacon:
-                intent = new Intent(this, iBeacon.class);
+                intent = new Intent(this, iBeaconActivity.class);
                 break;
             case R.id.buttonSensors:
-                intent = new Intent(this, Sensors.class);
+                intent = new Intent(this, SensorsActivity.class);
                 break;
             default:
                 return;

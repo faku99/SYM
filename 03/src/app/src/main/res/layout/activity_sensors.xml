@@ -10,7 +10,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="emcees.ch.labo_03.Barcode">
+    tools:context="emcees.ch.labo_03.BarcodeActivity">
 
 
 </LinearLayout>

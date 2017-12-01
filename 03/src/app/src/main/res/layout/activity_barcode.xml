@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="emcees.ch.labo_03.NFC"
+    tools:context="emcees.ch.labo_03.NFCActivity"
     android:weightSum="1">
 
 
