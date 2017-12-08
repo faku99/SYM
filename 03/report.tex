@@ -181,12 +181,18 @@ Le dernier cas est l'utilisation des capteurs internes de base de la plateforme 
     forcément l’implémenter) d’y remédier
     
     \textbf{Réponse} \\
-    REPONSE
+    Ces tremblements sont dû aux différentes imprécisions récupérées par les capteurs de champ magnétique et d'orientation. En effet, les capteurs sont parfois trop sensibles et enregistrent des données même lorsque l'appareil ne bouge pas (par exemple). Ces mesures parasites sont donc récupérées et interprétées "faussement" par l'application, ce qui induit les tremblements.
+    
+    Une façon d'atténuer - voir annuler - ces tremblements est d'utiliser des techniques de traitement du signal (un filtre passe bas par exemple) afin de réduire les valeurs parasites ou "lisser" les données perçues par les capteurs pour rendre l'animation fluide et sans tremblements.
     
 \end{enumerate}
 
 \section{Conclusion}
 
-L'utilisation des différents capteurs du systme mobile n'est pas une chose aisée. En effet, l'interaction avec des périphériques hardware et l'environnement externe montre une précision parfois aléatoire dû au fait que l'environnement n'est pas toujours adapté à la situation (interfé)
+L'utilisation des différents capteurs du systme mobile n'est pas une chose aisée. En effet, l'interaction avec des périphériques hardware et l'environnement externe montre une précision parfois aléatoire dû au fait que l'environnement n'est pas toujours adapté à la situation (interférences électro-magnétiques, rebondissement des ondes, instabilité de communication, etc.).
+
+Il sera nécessaire dans une application de production de prendre en compte ces différents cas et les gérer correctement afin de proposer une application de qualité pour l'utilisateur.
+
+Néamoins, nous avons vu qu'à l'aide de librairies externes, le travail primaire de développement est grandement simplifié et qu'il n'est pas nécessaire de développer en bas niveau pour rapidement obtenir un résultat de la part des capteurs.
 
 \end{document}
