@@ -98,7 +98,7 @@
 \title{
 	{\fontsize{40pt}{40pt}\selectfont SYM}
     \vskip 1.5em
-    {\Huge Laboratoire 02}
+    {\Huge Laboratoire 03}
 }
 
 \author{
@@ -124,113 +124,69 @@
 
 \section{Introduction}
 
-Le but de ce laboratoire est d'étudier la programmation répartie asynchrone à l'aide d'un serveur REST et d'implémenter de plusieurs manières la communication entre le client et le serveur à l'aide de simulation du monde réel.
+Le but de ce laboratoire est d'étudier l'utilisation des différents capteurs disponibles sur un mobile ainsi que des cas spécifiques d'utilisations.
 
-Dans le premier cas, il s'agira de partir du principe que l'on reçoit une réponse quasi instantanée de la part du serveur.
+Le premier cas d'utilisation est un système d'authentification à l'aide d'une combinaison d'un tag NFC et/ou d'un mot de passe.
 
-Dans le second cas, on suppose qu'une coupure de réseau intervient durant l'utilisation de l'application (passage dans un tunnel, changement d'antenne réseau, etc.) et qu'il est nécessaire d'enregistrer et essayer à intervals réguliers de renvoyer les requêtes de l'utilisateur au serveur jusqu'à rétablissement et envoi avec succès des requêtes.
+Le seconde cas d'utilisation est le scan et l'interprétation de codes-barres en 1D et 2D.
 
-Dans le troisième cas 
+Le troisième cas est l'utilisation de iBeacons qui peuvent être découverts dans l'environnement grâce au mobile.
+
+Le dernier cas est l'utilisation des capteurs internes de base de la plateforme afin de réaliser une boussole.
 
 \section{Réponses aux questions}
 
 \begin{enumerate}
-	\item Les interfaces AsyncSendRequest et CommunicationEventListener utilisées au point 3.1 restent très (et certainement trop) simples pour être utilisables dans une vraie application : que se passe-t-il si le serveur n’est pas joignable dans l’immédiat ou s’il retourne un code HTTP d’erreur ? Vous pouvez par exemple proposer une nouvelle version de ces deux interfaces pour vous aider à illustrer votre réponse.
+	\item Sachant que les collaborateurs de l'entreprise UBIQOMP SA se déplacent en véhiculant des
+    informations précieuses dans leurs dispositifs informatiques mobiles (munis de dispositifs de lecture NFC), et qu'ils sont amenés à se rendre dans des zones à risque, un expert a fait les estimations suivantes : \\
+    • La probabilité de vol d'un mobile par une personne malintentionnée et capable d'utiliser
+    les données à des fins préjudiciables pour la société est de 1\% ; \\
+    • La probabilité que le mot de passe puisse être découvert, soit par analyse des traces de
+    doigts sur l'écran, soit par observation en cours d'utilisation est de 4\% ; \\
+    • La probabilité de vol du porte-clés est de 0.1\% ; \\
+    • Environ 10\% des criminels susceptibles d'accéder aux données du mobile sait que le porteclés
+    permet l’accès au mobile. \\
+    Quelle est la probabilité moyenne globale que des données soient perdues, dans le cas où il faut la
+    balise ET le mot de passe, ainsi que dans le cas où il faut la balise OU le mot de passe (on négligera
+    dans le calcul la probabilité de l’intersection des deux ensembles), ou encore le cas où seule la balise
+    est nécessaire ? En d'autres termes, si l'on envoie cent collaborateurs en déplacement, quel est le
+    risque encouru de vol de données sensibles ? Mettre vos conclusions en rapport avec l'inconfort
+    subjectif de chaque solution.
+    Peut-on améliorer la situation en introduisant un contrôle des informations d'authentification par un
+    serveur éloigné (transmission d'un hash SHA256 du mot de passe et de la balise NFC) ? Si oui, à quelles
+    conditions ? Quels inconvénients ?
+    Proposer une stratégie permettant à la société UBIQOMP SA d'améliorer grandement son bilan
+    sécuritaire, en détailler les inconvénients pour les utilisateurs et pour la société.
     
     \textbf{Réponse} \\
-    Comme nous avons utilisé la librairie OkHttp et que nous avons implémenter notre solution en partant du principe que ce genre de problème peut arriver, nous vous invitons à regarder le code de notre solution.
-    
-    Dans les premier, troisième et quatrième cas, en cas d'erreurs de communication de la part du serveur, comme nous partons du principe que l'on était censé recevoir une réponse quasi immédiate (lors du login par exemple), il n'est pas nécessaire de stocker la requête pour la renvoyer de façon différée. Il faut avertir l'utilisateur de la non disponibilité du service et l'inviter à recommencer plus tard, ce qui n'est pas gérer par notre implémentation.
-    
-    Dans le deuxième cas par contre, comme il n'est pas nécessaire d'obtenir une réponse immédiate de la part du serveur (synchronisation de données par exemple), il est possible de stocker dans une liste les requêtes qui ont été effectuées par le client et lors de la reprise de la communication avec le réseau/client, renvoyer toutes les requêtes en suspens.
+    REPONSE
 	
-    \item Si une authentification par le serveur est requise, peut-on utiliser un protocole asynchrone ? Quelles seraient les restrictions ? Peut-on utiliser une transmission différée ?
+    \item Comparer la technologie à codes-barres et la technologie NFC, du point de vue d'une utilisation dans des applications pour smartphones, dans une optique : \\
+    • Professionnelle (Authentification, droits d’accès, clés de chiffrage) \\
+    • Grand public (Billetterie, contrôle d’accès, e-paiement) \\
+    • Ludique (Preuves d'achat, publicité, etc.) \\
+    • Financier (Coûts pour le déploiement de la technologie, possibilités de recyclage, etc.)
     
     \textbf{Réponse} \\
-    Non, il n'est pas possible d'utiliser un protocole asynchrone car HTTP est par définition synchrone: il demande à avoir une confirmation de l'authentification avant de pouvoir continuer le processus. Il n'est pas conseillé de faire avec des transmissions différées car cela implique de stocker temporairement les identifiants, ce qui pose évidemment un problème de sécurité, et l'authentification pourrait alors avoir lieu à un moment qui n'a plus de sens de s'authentifier (cinq minutes, une heure ou un jour plus tard par exemple).
+    REPONSE
     
-    \item Lors de l'utilisation de protocoles asynchrones, c'est généralement deux threads différents qui se préoccupent de la préparation, de l'envoi, de la réception et du traitement des données. Quels problèmes cela peut-il poser ?
-    
-    \textbf{Réponse} \\
-    Imaginons que l'on ait un thread pour la préparation et l'envoi de données et un autre thread pour la réception et le traitement des données.
-    
-    Le thread d'envoi effectue trois requêtes à la suite. Le thread de réception ne connait pas l'ordre d'envoi de ces requêtes et de ce fait, on ne peut pas garantir que ce thread gère correctement l'ordre de réception de ces données.
-    
-    Cela implique évidemment des problèmes de concurrences car l'envoi et le traitement peuvent s'effectuer dans un ordre inconnu.
-    
-    \newpage
-    
-    \item Lorsque l'on implémente l'écriture différée, il arrive que l'on ait soudainement plusieurs transmissions en attente qui deviennent possibles simultanément. Comment implémenter proprement cette situation (sans réalisation pratique) ? Voici deux possibilités :
-    
-    • Effectuer une connexion par transmission différée
-    
-    • Multiplexer toutes les connexions vers un même serveur en une seule connexion de transport.
-    Dans ce dernier cas, comment implémenter le protocole applicatif, quels avantages peut-on
-    espérer de ce multiplexage, et surtout, comment doit-on planifier les réponses du serveur
-    lorsque ces dernières s'avèrent nécessaires ?
-    
-    Comparer les deux techniques (et éventuellement d'autres que vous pourriez imaginer) et discuter des avantages et inconvénients respectifs.
+    \item Les iBeacons sont très souvent présentés comme une alternative à NFC. Pouvez-vous commenter cette affirmation en vous basant sur 2-3 exemples de cas d’utilisations (use-cases) concrets (par exemple epaiement, second facteur d’identification, accéder aux horaires à un arrêt de bus, etc.).
     
     \textbf{Réponse} \\
-    Dans le cas de la transmission différée, les requêtes sont mises dans une liste en attendant de récupérer la connexion. Une fois la connexion récupérée, ces requêtes sont envoyées au serveur une par une et c'est tout.
+    REPONSE
     
-    Dans le cas du multiplexage, il est nécessaire de combiner toutes les requêtes en attente en une seule requête. Afin que le serveur sache dans quel ordre les requêtes doivent être gérées, il est nécessaire de leur donner un ordre de traitement. Une fois cette requête récupérée côté serveur, il est nécessaire de démultiplexer cette requête et traiter les sous-requêtes dans l'ordre attribué.
-    
-    Nous pensons qu'il est préférable ensuite de répondre à chacune de ces requêtes de façon indépendantes. Exemple: la seconde requête sur les trois retourne une erreur 404, il serait dommage de ne pas traiter les deux autres.
-    
-    Cela permet aussi au client d'avoir une réponse immédiate de ses actions.
-    
-    Les avantages du multiplexage à l'envoi sont de pouvoir regrouper plusieurs requêtes en attente à l'aide d'une seule requête. Nous ne voyons pas d'avantages à utiliser le multiplexage pour la réception des réponses pour les mêmes raisons évoquées précédemment.
-    
-    \item a. Quel inconvénient y a-t-il à utiliser une infrastructure de type REST/JSON n'offrant aucun
-    service de validation (DTD, XML-schéma, WSDL) par rapport à une infrastructure comme SOAP
-    offrant ces possibilités ? Y a-t-il en revanche des avantages que vous pouvez citer ?
+    \item Une fois la manipulation effectuée, vous constaterez que les animations de la flèche ne sont pas
+    fluides, il va y avoir un tremblement plus ou moins important même si le téléphone ne bouge pas.
+    Veuillez expliquer quelle est la cause la plus probable de ce tremblement et donner une manière (sans
+    forcément l’implémenter) d’y remédier
     
     \textbf{Réponse} \\
-    Il n'est pas possible de valider la structure du document lors de l'envoi ou de la réception car il n'existe pas d'outils pour valider les documents JSON réellement viable. La communication est par contre beaucoup plus légère car le format JSON est bien moins verbeux que le format XML et cela est un avantage comme nous pouvons le voir dans la question suivante.
-    
-    b. L’utilisation d’un mécanisme comme Protocol Buffers est-elle compatible avec une
-    architecture basée sur HTTP ? Veuillez discuter des éventuelles avantages ou limitations par
-    rapport à un protocole basé sur JSON ou XML ?
-    
-    \textbf{Réponse} \\
-    Il est nécessaire que le serveur supporte lui aussi Protocol Buffers afin de pouvoir envoyer, recevoir et comprendre la communication entre lui et les clients.
-    Avantages et inconvéniants: Ce protocole offre la compression des informations, ce qui rend les données moins lourdes et donc la communication plus rapide. Néanmoins, le débuggeur est rendu plus difficile car il est nécessaire de comprendre la structure de l'information et de la décompresser afin de comprendre quelles données transitent, contrairement à JSON ou XML qui sont facilement lisibles par l'humain.
-    
-    \item Quel gain peut-on constater en moyenne sur des fichiers texte (xml et json sont aussi du texte) en utilisant de la compression du point 3.4 ? Vous comparerez vos résultats par rapport au gain théorique d’une compression DEFLATE, vous enverrez aussi plusieurs tailles de contenu pour comparer.
-    
-    \textbf{Réponse} \\
-    Le ratio théorique d'une compresssion DEFLATE est entre 2 et 5.
-    
-    Voici les résultats obtenus lors de nos tests:
-    \\
-    \begin{center}
-        \begin{tabular}{|l|l|l|}
-            \hline
-            \textbf{Type} & \textbf{Compressé} & \textbf{Taille}
-            \\
-            \hline
-            JSON & Non & 8598
-            \\
-            \hline
-            XML & Non & 680
-            \\
-            \hline
-            JSON & Oui & 2616 (69.6\%)
-            \\
-            \hline
-            XML & Oui & 272 (60.0\%)
-            \\
-            \hline
-        \end{tabular}
-    \end{center}
-    
-    Nous pouvons constater que nous sommes tout à fait dans les ratio théoriques de la compression DEFLATE. Cela a évidemment plusieurs avantages lors de la transmissions: des données plus petites et un transfert plus rapide.
+    REPONSE
     
 \end{enumerate}
 
 \section{Conclusion}
 
-Nous avons pu constater que l'implémentation des communications réseaux dans un contexte mobile n'est pas aussi simple que dans un contexte fixe. En effet, le changement fréquent d'environnements nous oblige à réfléchir à tous les cas et implémenter ceci de façon asynchrone afin de ne pas bloquer l'utilisation de l'application pendant la communication. De plus, à cause de ces contraintes de faible réseau, nous avons pu constater à nouveau qu'il était préférable d'envoyer des données les plus petites possibles et nous pouvons nous aider de la compression afin d'y parvenir.
+L'utilisation des différents capteurs du systme mobile n'est pas une chose aisée. En effet, l'interaction avec des périphériques hardware et l'environnement externe montre une précision parfois aléatoire dû au fait que l'environnement n'est pas toujours adapté à la situation (interfé)
 
 \end{document}
