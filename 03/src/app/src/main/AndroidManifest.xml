@@ -30,6 +30,17 @@
         <activity
             android:name="emcees.ch.labo_03.BarcodeActivity"
             android:windowSoftInputMode="adjustPan" />
+
+        <service
+            android:name="org.altbeacon.beacon.service.BeaconService"
+            android:enabled="true"
+            android:exported="false"
+            android:isolatedProcess="false"
+            android:label="beacon" />
+        <service
+            android:name="org.altbeacon.beacon.BeaconIntentProcessor"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
