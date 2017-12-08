@@ -7,4 +7,9 @@
     android:orientation="vertical"
     tools:context="emcees.ch.labo_03.iBeaconActivity">
 
+    <ListView
+        android:id="@+id/beacons_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
 </LinearLayout>
