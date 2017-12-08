@@ -1,14 +1,25 @@
 package emcees.ch.labo_03;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +37,23 @@ public class iBeaconActivity extends AppCompatActivity implements BeaconConsumer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ibeacon);
+
+        Dexter.withActivity(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).check();
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BEACON_LAYOUT));
@@ -49,7 +77,6 @@ public class iBeaconActivity extends AppCompatActivity implements BeaconConsumer
     @Override
     public void onBeaconServiceConnect() {
         beaconManager.addRangeNotifier((beacons, region) -> {
-            System.out.println("Detected new beacons");
             beaconsList.clear();
             for (Beacon beacon : beacons) {
                 String beaconInfo = String.format("Major: %s, Minor: %s, RSSI: %d",
@@ -57,7 +84,13 @@ public class iBeaconActivity extends AppCompatActivity implements BeaconConsumer
                 System.out.println(beaconInfo);
                 beaconsList.add(beaconInfo);
             }
-            adapter.notifyDataSetChanged();
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
         });
+
+        try {
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
