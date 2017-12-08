@@ -13,7 +13,7 @@ import org.altbeacon.beacon.BeaconParser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class iBeacon extends AppCompatActivity implements BeaconConsumer {
+public class iBeaconActivity extends AppCompatActivity implements BeaconConsumer {
     protected static final String BEACON_LAYOUT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
 
     private BeaconManager beaconManager;
