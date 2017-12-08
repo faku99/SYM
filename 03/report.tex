@@ -116,7 +116,7 @@
 % En-têtes.
 \pagestyle{fancy}
 \lhead{SYM}
-\rhead{Laboratoire 01}
+\rhead{Laboratoire 03}
 
 \maketitle
 
@@ -170,10 +170,16 @@ Le dernier cas est l'utilisation des capteurs internes de base de la plateforme 
     \textbf{Réponse} \\
     REPONSE
     
-    \item Les iBeacons sont très souvent présentés comme une alternative à NFC. Pouvez-vous commenter cette affirmation en vous basant sur 2-3 exemples de cas d’utilisations (use-cases) concrets (par exemple epaiement, second facteur d’identification, accéder aux horaires à un arrêt de bus, etc.).
+    \item Les iBeacons sont très souvent présentés comme une alternative à NFC. Pouvez-vous commenter cette affirmation en vous basant sur 2-3 exemples de cas d'utilisations (use-cases) concrets (par exemple epaiement, second facteur d'identification, accéder aux horaires à un arrêt de bus, etc.).
     
     \textbf{Réponse} \\
-    REPONSE
+    Les iBeacons présentent plusieurs avantages par rapport à la technologie NFC :
+    \begin{itemize}
+    		\item La portée : un iBeacon peut être détecté jusqu'à 50m, contre 10cm pour la technologie NFC.
+    		\item Disponibilité : les iBeacons demandent la technologie BLE (Bluetooth Low Energy), disponible sur la grande majorité des smartphones récents, alors que NFC demande que le téléphone soit équipé d'une puce spéciale.
+    \end{itemize}
+    
+    	Si on prend le cas d'utilisation d'un affichage des horaires à un arrêt de bus, la technologie iBeacon est plus intéressante car il suffit de se trouver à environ 50m pour pouvoir en profiter. De plus, imaginons que ce soit un arrêt très fréquenté, il serait dommage de devoir déranger la foule de personnes attendant leur bus dans le seul but d'accéder à la borne NFC. Cependant, dans le cas d'un paiement à la caisse d'un supermarché, la technologie NFC est préférable aux iBeacons car sa très courte portée apporte un sentiment de sécurité. L'administration du supermarché devra cependant investir d'avantage pour une borne NFC que pour un simple iBeacon.
     
     \item Une fois la manipulation effectuée, vous constaterez que les animations de la flèche ne sont pas
     fluides, il va y avoir un tremblement plus ou moins important même si le téléphone ne bouge pas.
