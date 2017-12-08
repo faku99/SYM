@@ -51,7 +51,7 @@ public class iBeaconActivity extends AppCompatActivity implements BeaconConsumer
 
             @Override
             public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                token.continuePermissionRequest();
+                /*token.continuePermissionRequest();*/
             }
         }).check();
 
