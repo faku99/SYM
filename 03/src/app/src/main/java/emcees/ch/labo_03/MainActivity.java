@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.buttonNFC:
-                intent = new Intent(this, NFCActivity.class);
+                intent = new Intent(this, NFCLoginActivity.class);
                 break;
             case R.id.buttonBarcode:
                 intent = new Intent(this, BarcodeActivity.class);

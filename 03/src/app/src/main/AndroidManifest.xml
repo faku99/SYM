@@ -4,6 +4,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.NFC" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="emcees.ch.labo_03.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,20 +28,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="emcees.ch.labo_03.NFCActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="emcees.ch.labo_03.iBeaconActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="emcees.ch.labo_03.SensorsActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="emcees.ch.labo_03.BarcodeActivity"
-            android:windowSoftInputMode="adjustPan" />
-    </application>
+            android:name=".NFCLoginActivity"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
-    <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".iBeaconActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".SensorsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".BarcodeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".NFCActivity"
+            android:label="@string/title_activity_nfc"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
 
 </manifest>

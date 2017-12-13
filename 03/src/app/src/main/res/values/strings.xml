@@ -8,4 +8,10 @@
     <string name="QR_Code_result_header">Le texte contenu dans votre QR code est:</string>
     <string name="scan_canceled">Scan annulé</string>
     <string name="start_scan">Scan QR code</string>
+
+    <string name="sensor_not_detected">Capteur non détecté</string>
+    <string name="title_activity_nfc">NFCActivity</string>
+    <string name="nfc_plus_password_required">NFC + password required</string>
+    <string name="login">login</string>
+    <string name="authenticate_level">Authenticate level:</string>
 </resources>

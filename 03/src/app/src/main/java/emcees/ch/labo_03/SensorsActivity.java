@@ -10,15 +10,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class SensorsActivity extends AppCompatActivity implements SensorEventListener {
 
     //opengl
-    private OpenGLRenderer  opglr           = null;
-    private GLSurfaceView m3DView           = null;
-    private SensorManager sensorManager     = null;
-    private Sensor accelerometer            = null;
-    private Sensor magnetometer             = null;
+    private OpenGLRenderer opglr = null;
+    private GLSurfaceView m3DView = null;
+    private SensorManager sensorManager = null;
+    private Sensor accelerometer = null;
+    private Sensor magnetometer = null;
 
     private float[] rotationMatrix = new float[16];
     private float[] accelerometerData = new float[4];
@@ -51,6 +52,12 @@ public class SensorsActivity extends AppCompatActivity implements SensorEventLis
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        if (accelerometer == null || magnetometer == null) {
+            Toast.makeText(this, getResources().getText(R.string.sensor_not_detected), Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
     }
 
     protected void onResume() {
