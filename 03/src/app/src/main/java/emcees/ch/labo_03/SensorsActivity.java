@@ -21,12 +21,10 @@ public class SensorsActivity extends AppCompatActivity implements SensorEventLis
     private Sensor accelerometer = null;
     private Sensor magnetometer = null;
 
+    // Matrixes
     private float[] rotationMatrix = new float[16];
     private float[] accelerometerData = new float[4];
     private float[] magnetometerData = new float[4];
-
-    private boolean gotAccelerometerData = false;
-    private boolean gotMagnetometerData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +91,6 @@ public class SensorsActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        // Do nothing
     }
 }
