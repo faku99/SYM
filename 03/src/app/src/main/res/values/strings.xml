@@ -9,6 +9,12 @@
     <string name="scan_canceled">Scan annulé</string>
     <string name="start_scan">Scan QR code</string>
 
+    <string name="nfc_is_checked">Login NFC</string>
+
+    <string name="nfc_OK">OK</string>
+    <string name="nfc__not_OK">Not OK</string>
+
+
     <string name="sensor_not_detected">Capteur non détecté</string>
     <string name="title_activity_nfc">NFCActivity</string>
     <string name="nfc_plus_password_required">NFC + password required</string>

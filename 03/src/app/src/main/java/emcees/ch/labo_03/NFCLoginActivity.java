@@ -15,6 +15,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -37,6 +39,7 @@ public class NFCLoginActivity extends AppCompatActivity {
     private EditText passwordField = null;
     private CheckBox pswdPlusNfcCheckbox = null;
     private Button loginButton = null;
+    private TextView nfcChecked = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,26 +49,52 @@ public class NFCLoginActivity extends AppCompatActivity {
         passwordField = (EditText) findViewById(R.id.password);
         pswdPlusNfcCheckbox = (CheckBox) findViewById(R.id.checkboxloginNFC);
         loginButton = (Button) findViewById(R.id.login);
+        nfcChecked = (TextView) findViewById(R.id.nfc_checked);
+
+
+        nfcChecked.setText(getResources().getString(R.string.nfc__not_OK));
+        nfcChecked.setTextColor(getResources().getColor(R.color.nfcNotOK));
 
         loginButton.setOnClickListener(v -> tryToLogin());
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        // TODO: checks
+        if (mNfcAdapter == null) {
+            // Stop here, we definitely need NFC
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+
+        }
+
+        if (!mNfcAdapter.isEnabled()) {
+            Toast.makeText(this, "NFC is disable.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
     }
 
 
     void tryToLogin() {
+
         boolean pswdIsCorrect = password.equals(passwordField.getText().toString());
         if (pswdPlusNfcCheckbox.isChecked()) {
             if (NFChasBeenChecked && pswdIsCorrect) {
-                startActivity(new Intent(this, NFCActivity.class));
+                login();
             }
         } else {
             if (NFChasBeenChecked || pswdIsCorrect) {
-                startActivity(new Intent(this, NFCActivity.class));
+                login();
             }
         }
+    }
+
+    void login() {
+        passwordField.setText("");
+        NFChasBeenChecked = false;
+        nfcChecked.setTextColor(getResources().getColor(R.color.nfcNotOK));
+        nfcChecked.setText(getResources().getString(R.string.nfc__not_OK));
+        startActivity(new Intent(this, NFCActivity.class));
     }
 
 
@@ -190,9 +219,13 @@ public class NFCLoginActivity extends AppCompatActivity {
             if (result != null) {
                 if (result.equals(NFCtagPassword)) {
                     NFChasBeenChecked = true;
+                    nfcChecked.setText(getResources().getString(R.string.nfc_OK));
+                    nfcChecked.setTextColor(getResources().getColor(R.color.nfcOK));
                     tryToLogin();
                 } else {
                     NFChasBeenChecked = false;
+                    nfcChecked.setText(getResources().getString(R.string.nfc__not_OK));
+                    nfcChecked.setTextColor(getResources().getColor(R.color.nfcNotOK));
                 }
             }
         }

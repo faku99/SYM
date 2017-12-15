@@ -4,9 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="nfcOK">#28702b</color>
+    <color name="nfcNotOK">#ff0000</color>
+
     <color name="authentMax">#28702b</color>
     <color name="authentMedium">#3dff46</color>
     <color name="authentLow">#ed8200</color>
     <color name="authentZero">#ff0000</color>
+
 
 </resources>

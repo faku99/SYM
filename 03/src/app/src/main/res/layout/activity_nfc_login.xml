@@ -27,5 +27,15 @@
         android:layout_height="wrap_content"
         android:text="@string/login" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nfc_is_checked"/>
+
+    <TextView
+        android:id="@+id/nfc_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>
