@@ -145,16 +145,44 @@ Le dernier cas est l'utilisation des capteurs internes de base de la plateforme 
     doigts sur l'écran, soit par observation en cours d'utilisation est de 4\% ; \\
     • La probabilité de vol du porte-clés est de 0.1\% ; \\
     • Environ 10\% des criminels susceptibles d'accéder aux données du mobile sait que le porteclés
-    permet l’accès au mobile. \\
+    permet l’accès au mobile.
+    
     Quelle est la probabilité moyenne globale que des données soient perdues, dans le cas où il faut la
-    balise ET le mot de passe, ainsi que dans le cas où il faut la balise OU le mot de passe (on négligera
-    dans le calcul la probabilité de l’intersection des deux ensembles), ou encore le cas où seule la balise
-    est nécessaire ? En d'autres termes, si l'on envoie cent collaborateurs en déplacement, quel est le
-    risque encouru de vol de données sensibles ? Mettre vos conclusions en rapport avec l'inconfort
+    balise ET le mot de passe, ainsi que dans le cas où il faut la balise OU le mot de passe (on négligera dans le calcul la probabilité de l’intersection des deux ensembles), ou encore le cas où seule la balise est nécessaire ? En d'autres termes, si l'on envoie cent collaborateurs en déplacement, quel est le risque encouru de vol de données sensibles ? Mettre vos conclusions en rapport avec l'inconfort
     subjectif de chaque solution.
-    Peut-on améliorer la situation en introduisant un contrôle des informations d'authentification par un
-    serveur éloigné (transmission d'un hash SHA256 du mot de passe et de la balise NFC) ? Si oui, à quelles
-    conditions ? Quels inconvénients ?
+    
+    \textbf{Réponse} \\
+    
+    X = Vol du mobile \\
+    P(X) = 0.01 \\
+    
+    Y = Mot de passe trouvé \\
+    P(Y) = 0.04 \\
+    
+    Z = Vol du porte-clés \\
+    P(Z) = 0.001 \\
+    
+    A = Criminel intelligent qui sait qu'il faut le porte clé pour accéder à l'application \\
+    P(A) = 0.1 \\
+    
+    
+    Probabilité que l'on accède aux données à l'aide du mot de passe: \\
+    P(X) * P(Y) = 0.0004 = 0.04\%
+    
+    Probabilité que l'on accède aux données à l'aide de la balise: \\
+    P(X) * P(Z) * P(A) = 0.000001 = 0.0001\%
+    
+    Probabilité que l'on accède aux données à l'aide de la balise et du mot de passe: \\
+    P(X) * P(Y) * P(Z) * P(A) = 0.00000004 = 0.000004\%
+    
+    
+    Probabilité que l'on accède aux données à l'aide de la balise ou du mot de passe: \\
+    P(X) * P(Y) + P(X) * P(Z) * P(A) = 0.000401 = 0.0401\% \\
+    
+    B = Vol pour 100 personnes
+    B suit une loi binomiale, donc il suffit de multiplier les probabilités de vol par 100 pour trouver le risque pour 100 personnes. \\
+    
+    Peut-on améliorer la situation en introduisant un contrôle des informations d'authentification par un serveur éloigné (transmission d'un hash SHA256 du mot de passe et de la balise NFC) ? Si oui, à quelles conditions ? Quels inconvénients ?
     Proposer une stratégie permettant à la société UBIQOMP SA d'améliorer grandement son bilan
     sécuritaire, en détailler les inconvénients pour les utilisateurs et pour la société.
     
