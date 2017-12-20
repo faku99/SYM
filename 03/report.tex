@@ -162,7 +162,7 @@ Le dernier cas est l'utilisation des capteurs internes de base de la plateforme 
     Z = Vol du porte-clés \\
     P(Z) = 0.001 \\
     
-    A = Criminel intelligent qui sait qu'il faut le porte clé pour accéder à l'application \\
+    A = Criminel intelligent qui sait qu'il faut le porte-clés pour accéder à l'application \\
     P(A) = 0.1 \\
     
     
@@ -180,15 +180,25 @@ Le dernier cas est l'utilisation des capteurs internes de base de la plateforme 
     P(X) * P(Y) + P(X) * P(Z) * P(A) = 0.000401 = 0.0401\% \\
     
     B = Vol pour 100 personnes
-    B suit une loi binomiale, donc il suffit de multiplier les probabilités de vol par 100 pour trouver le risque pour 100 personnes. \\
+    B suit une loi binomiale, donc il suffit de multiplier les probabilités de vol par 100 pour trouver le risque pour 100 personnes.
+    
+    \pagebreak
     
     Peut-on améliorer la situation en introduisant un contrôle des informations d'authentification par un serveur éloigné (transmission d'un hash SHA256 du mot de passe et de la balise NFC) ? Si oui, à quelles conditions ? Quels inconvénients ?
     Proposer une stratégie permettant à la société UBIQOMP SA d'améliorer grandement son bilan
     sécuritaire, en détailler les inconvénients pour les utilisateurs et pour la société.
     
     \textbf{Réponse} \\
-    REPONSE
+    Oui, cela permettra d'améliorer la sécurité car les identifiants ne seront plus stocké dans l'application. En effet, les identifiants attendus ne seront plus stocké sur l'appareil (qui pourraient être bypassés ou bruteforcés) et devront obligatoirement être envoyés au serveur qui lui validera la bonne authentification. De plus, si un utilisateur venait à perdre son tag NFC ou son mot de passe, il serait alors possible de le bloquer côté serveur et empêchera l'attaquant de pouvoir se connecter.
+    
+    La contrepartie de ce système est l'infrastructure à mettre en place, d'autant plus que l'utilisateur n'aura pas forcément une connexion disponible lors de l'utilisation de l'application qui, elle, doit rester utilisable dans n'importe quelles conditions. De ce fait, il sera peut-être nécessaire de conserver des clés d'authentification temporairement en mémoire afin de permettre à l'utilisateur de se connecter même sans avoir de connexion. Il sera donc nécessaire de se connecter tous les X temps au serveur qui fournira les nouvelles clés valides (qui devront rester secrètes).
+    
+    En résumé, la société devra mettre en place une infrastructure de validation des identifications à distance, modifier l'application pour que cela soit possible et gérer correctement les identifiants, leur rafraichissement, et le bon fonctionnement sécuritaire du système.
+    
+    De plus, il sera nécessaire d'avertir/former les utilisateurs du fonctionnement de l'application afin de renouveler de façon régulière les identifiants temporaires permettant l'accès temporaire à l'application avec, par exemple, un message dans l'application lors de l'expiration des identifiants.
 	
+    Une stratégie supplémentaire visant à changer régulièrement les mots de passe et tags NFC permettra à la société d'accroître son système de sécurité, tout en gardant à l'esprit que la sécurité à 100\% n'existe pas.
+    
     \item Comparer la technologie à codes-barres et la technologie NFC, du point de vue d'une utilisation dans des applications pour smartphones, dans une optique : \\
     • Professionnelle (Authentification, droits d’accès, clés de chiffrage) \\
     • Grand public (Billetterie, contrôle d’accès, e-paiement) \\
