@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ch.heigvd.iict.sym.sym_labo4.MainActivityWear"
+    tools:deviceIds="wear">
+
+    <ch.heigvd.iict.sym.sym_labo4.widgets.CircularSliderRangeFixed
+        android:id="@+id/circular_red"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        auto:arc_dash_size="12dp"
+        auto:border_color="@android:color/holo_red_light"
+        auto:arc_color="@android:color/holo_red_dark"
+        auto:border_thickness="10dp"
+        auto:start_angle="-90"
+        auto:start_thumb_size="0dip"
+        auto:end_angle="30"
+        auto:thumb_size="15dp" />
+
+    <ch.heigvd.iict.sym.sym_labo4.widgets.CircularSliderRangeFixed
+        android:id="@+id/circular_green"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="45dp"
+        auto:arc_dash_size="12dp"
+        auto:border_color="@android:color/holo_green_light"
+        auto:arc_color="@android:color/holo_green_dark"
+        auto:border_thickness="10dp"
+        auto:start_angle="-90"
+        auto:start_thumb_size="0dip"
+        auto:end_angle="60"
+        auto:thumb_size="15dp" />
+
+    <ch.heigvd.iict.sym.sym_labo4.widgets.CircularSliderRangeFixed
+        android:id="@+id/circular_blue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="75dp"
+        auto:arc_dash_size="12dp"
+        auto:border_color="@android:color/holo_blue_light"
+        auto:arc_color="@android:color/holo_blue_dark"
+        auto:border_thickness="10dp"
+        auto:start_angle="-90"
+        auto:start_thumb_size="0dip"
+        auto:end_angle="90"
+        auto:thumb_size="15dp" />
+
+</android.support.wear.widget.BoxInsetLayout>

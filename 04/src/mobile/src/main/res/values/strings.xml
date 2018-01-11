@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SYM-Labo4</string>
+
+    <string name="main_btn_notification">Notification</string>
+    <string name="main_btn_application">Application</string>
+
+    <string name="notification_btn_display_notification">Display</string>
+    <string name="notification_wear_action">Say Hello !</string>
+
+</resources>
