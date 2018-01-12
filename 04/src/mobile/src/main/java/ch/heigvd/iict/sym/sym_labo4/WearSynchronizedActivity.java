@@ -5,20 +5,59 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-public class WearSynchronizedActivity extends AppCompatActivity {
+import com.google.android.gms.wearable.DataClient;
+import com.google.android.gms.wearable.DataEvent;
+import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.Wearable;
+
+public class WearSynchronizedActivity extends AppCompatActivity implements DataClient.OnDataChangedListener {
 
     private static final String TAG = WearSynchronizedActivity.class.getSimpleName();
+
+    private DataClient mDataClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wearsynchronized);
 
-        /* A IMPLEMENTER */
-
+        mDataClient = Wearable.getDataClient(this);
     }
 
-    /* A IMPLEMENTER */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mDataClient.addListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mDataClient.removeListener(this);
+    }
+
+    @Override
+    public void onDataChanged(DataEventBuffer dataEvents) {
+        for (DataEvent event : dataEvents) {
+            if (event.getType() == DataEvent.TYPE_CHANGED) {
+                DataItem item = event.getDataItem();
+                if (item.getUri().getPath().compareTo("/rgb") == 0) {
+                    DataMap map = DataMapItem.fromDataItem(item).getDataMap();
+
+                    int r = map.getInt("r");
+                    int g = map.getInt("g");
+                    int b = map.getInt("b");
+
+                    updateColor(r, g, b);
+                }
+            }
+        }
+    }
 
     /*
      *  Code utilitaire fourni

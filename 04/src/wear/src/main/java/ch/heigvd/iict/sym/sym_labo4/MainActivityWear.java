@@ -6,6 +6,12 @@ import android.support.wearable.activity.WearableActivity;
 
 import com.bozapro.circularsliderrange.CircularSliderRange;
 import com.bozapro.circularsliderrange.ThumbEvent;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.wearable.DataClient;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
+import com.google.android.gms.wearable.Wearable;
 
 import ch.heigvd.iict.sym.sym_labo4.widgets.CircularSliderRangeFixed;
 
@@ -25,6 +31,8 @@ public class MainActivityWear extends WearableActivity {
     private double endAngleRed      = 90+30;
     private double endAngleGreen    = 90+60;
     private double endAngleBlue     = 90+90;
+
+    private DataClient mDataClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +94,8 @@ public class MainActivityWear extends WearableActivity {
 
         updateColor();
 
-        /* A IMPLEMENTER */
+        mDataClient = Wearable.getDataClient(this);
     }
-
-    /* A IMPLEMENTER */
 
     @Override
     public void onEnterAmbient(Bundle ambientDetails) {
@@ -127,7 +133,17 @@ public class MainActivityWear extends WearableActivity {
         int g = (int) Math.round(255 * ((endAngleGreen - startAngleGreen) % 360) / 360.0);
         int b = (int) Math.round(255 * ((endAngleBlue  - startAngleBlue)  % 360) / 360.0);
 
-        /* A IMPLEMENTER */
+        if (mDataClient != null) {
+            System.out.println("Sending data");
+            
+            PutDataMapRequest putDataMapRequest = PutDataMapRequest.create("/rgb");
+            putDataMapRequest.getDataMap().putInt("r", r);
+            putDataMapRequest.getDataMap().putInt("g", g);
+            putDataMapRequest.getDataMap().putInt("b", b);
+
+            PutDataRequest putDataRequest = putDataMapRequest.asPutDataRequest();
+            Task<DataItem> putDataTask = mDataClient.putDataItem(putDataRequest);
+        }
     }
 
 }
