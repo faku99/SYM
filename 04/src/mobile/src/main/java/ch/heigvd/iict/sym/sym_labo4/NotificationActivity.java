@@ -91,7 +91,7 @@ public class NotificationActivity extends AppCompatActivity {
                     .setContentTitle(getString(R.string.buyRandomStuff))
                     .setContentIntent(pendingIntent)
                     .addAction(R.drawable.ic_alert_white_18dp,
-                            "Go here !", mapPendingIntent);
+                            getString(R.string.goHere), mapPendingIntent);
 
             // Get an instance of the NotificationManager service and pass the notification to it
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
