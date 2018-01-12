@@ -11,4 +11,38 @@
     tools:context="ch.heigvd.iict.sym.sym_labo4.NotificationActivity">
 
 
+    <Button
+        android:id="@+id/simpleNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/holo_purple"
+        android:text="@string/simpleNotification" />
+
+    <Button
+        android:id="@+id/actionsNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="77dp"
+        android:layout_marginRight="77dp"
+        android:background="@android:color/holo_blue_light"
+        android:text="@string/actionsNotification" />
+
+    <Button
+        android:id="@+id/wearNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/holo_orange_light"
+        android:text="@string/wearNotification" />
+
 </RelativeLayout>

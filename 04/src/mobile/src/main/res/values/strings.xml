@@ -6,5 +6,18 @@
 
     <string name="notification_btn_display_notification">Display</string>
     <string name="notification_wear_action">Say Hello !</string>
+    <string name="simpleNotification">Give me a coke</string>
+    <string name="actionsNotification">Buy some random stuff</string>
+    <string name="wearNotification">Wha u want ?</string>
+
+    <string name="noCoke">No coke for you, sorry...</string>
+    <string name="wantCoke">You want a coke ?</string>
+
+    <string name="heigLocation">geo:0,0?q=HEIG-VD 1400 Yverdon-les-Bains</string>
+    <string name="dontWantToBuy">Don\'t you want to buy random stuff ?</string>
+    <string name="buyRandomStuff">Want to buy some random stuff ?</string>
+    <string name="wantDoYouWant">Let\'s talk business. What do you want ?</string>
+
+
 
 </resources>
