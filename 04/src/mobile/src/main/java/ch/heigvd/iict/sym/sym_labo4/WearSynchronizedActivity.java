@@ -24,6 +24,7 @@ public class WearSynchronizedActivity extends AppCompatActivity implements DataC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wearsynchronized);
 
+        // Connect to Wearable Data Layer API.
         mDataClient = Wearable.getDataClient(this);
     }
 
@@ -31,6 +32,7 @@ public class WearSynchronizedActivity extends AppCompatActivity implements DataC
     public void onResume() {
         super.onResume();
 
+        // Add this class as listener.
         mDataClient.addListener(this);
     }
 
@@ -38,6 +40,7 @@ public class WearSynchronizedActivity extends AppCompatActivity implements DataC
     public void onPause() {
         super.onPause();
 
+        // Remove this class as listener.
         mDataClient.removeListener(this);
     }
 
@@ -46,6 +49,7 @@ public class WearSynchronizedActivity extends AppCompatActivity implements DataC
         for (DataEvent event : dataEvents) {
             if (event.getType() == DataEvent.TYPE_CHANGED) {
                 DataItem item = event.getDataItem();
+                // If RGB has changed, update values.
                 if (item.getUri().getPath().compareTo("/rgb") == 0) {
                     DataMap map = DataMapItem.fromDataItem(item).getDataMap();
 

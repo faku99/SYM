@@ -94,6 +94,7 @@ public class MainActivityWear extends WearableActivity {
 
         updateColor();
 
+        // Connect to Wearable Data Layer API.
         mDataClient = Wearable.getDataClient(this);
     }
 
@@ -133,14 +134,14 @@ public class MainActivityWear extends WearableActivity {
         int g = (int) Math.round(255 * ((endAngleGreen - startAngleGreen) % 360) / 360.0);
         int b = (int) Math.round(255 * ((endAngleBlue  - startAngleBlue)  % 360) / 360.0);
 
+        // When color is updated, notify phone for changes.
         if (mDataClient != null) {
-            System.out.println("Sending data");
-            
             PutDataMapRequest putDataMapRequest = PutDataMapRequest.create("/rgb");
             putDataMapRequest.getDataMap().putInt("r", r);
             putDataMapRequest.getDataMap().putInt("g", g);
             putDataMapRequest.getDataMap().putInt("b", b);
 
+            // Notify.
             PutDataRequest putDataRequest = putDataMapRequest.asPutDataRequest();
             Task<DataItem> putDataTask = mDataClient.putDataItem(putDataRequest);
         }
